@@ -1,0 +1,10 @@
+info:
+  version: 1.0.0
+  description: API SalesForMe
+
+postgres:
+  server: 185.26.115.63
+  port: 5432
+  database: salesforme
+  user: postgres
+  password: postgres
