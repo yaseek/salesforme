@@ -1,0 +1,4 @@
+templates:
+  views: /srv/frontend/public_html/ejs
+  engine: ejs
+  
