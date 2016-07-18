@@ -1,3 +1,7 @@
+binding:
+  port: 4000
+  host: localhost
+
 info:
   version: 1.0.0
   description: API SalesForMe

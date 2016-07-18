@@ -1,3 +1,7 @@
+binding:
+  port: 3000
+  host: localhost
+
 templates:
   views: /srv/frontend/public_html/ejs
   engine: ejs

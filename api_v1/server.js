@@ -12,7 +12,10 @@ app.get('/info', function(req, res){
 
 core.config.loadConfig(__dirname + '/etc/config.yaml')
   .then(() => {
-    app.listen(process.env.PORT || 4000, 'localhost');    
+    console.log('Listening', process.env.PORT || core.config.binding.port, 'on',
+      core.config.binding.host);    
+    app.listen(process.env.PORT || core.config.binding.port, 
+      core.config.binding.host);    
   })
 
 
