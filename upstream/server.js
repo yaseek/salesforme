@@ -6,7 +6,7 @@ const core = require('./core');
 const app = express();
 
 app.get(/\/.*/, function(req, res){
-  var view = req.path.match(/\/(.*)/),
+  var view = req.path.match(/^\/(.*)/),
       modulename = (!view || !view[1].trim()) ? 'index' : view[1].trim();
   //res.render('index', { view: view[1] });
   res.render(modulename, { 
