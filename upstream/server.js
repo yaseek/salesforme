@@ -8,13 +8,13 @@ const app = express();
 app.get(/\/.*/, function(req, res){
   var view = req.path.match(/^\/(.*)/),
       modulename = (!view || !view[1].trim()) ? 'index' : view[1].trim();
-  //res.render('index', { view: view[1] });
+  //console.log('TRY LOAD', modulename);
+  try {
   res.render(modulename, { 
     view: view[1],
     q: req.query
   }, (err, html) => {
     res.set('Content-Type', 'text/html');
-    //console.log('RENDERED', err);
     if (err) {
       console.log(`Cannon get ${modulename} module`, err);
       res.status(404).send('not found ' + (view ? view[1] : 'unknown module'));
@@ -22,9 +22,10 @@ app.get(/\/.*/, function(req, res){
       res.status(200).send(html);
     }
   });
-  try {
   } catch (e) {
-    console.log('CATCHED');
+    console.log('Bad trying for', modulename);
+    res.set('Content-Type', 'text/html');
+    res.status(404).send(`The file named with ${modulename} cannot be found`);
   }
 });
 
