@@ -5,6 +5,7 @@ binding:
 info:
   version: 1.0.0
   description: API SalesForMe
+  vk_app: 5222884
 
 postgres:
   server: 185.26.115.63
