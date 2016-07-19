@@ -1,4 +1,6 @@
 
+const path = require('path');
+
 const express = require('express');
 
 const core = require('./core');
@@ -12,10 +14,16 @@ app.get('/info', function(req, res){
 
 core.config.loadConfig(__dirname + '/etc/config.yaml')
   .then(() => {
+    //app.all('*', core.http.response.prepare);
+    //app.all('/api/*', core.http.auth.requireAuth);
+
+    core.loadResources(app, path.resolve('./resources'));
+
     console.log('Listening', process.env.PORT || core.config.binding.port, 'on',
       core.config.binding.host);    
     app.listen(process.env.PORT || core.config.binding.port, 
       core.config.binding.host);    
   })
+  .catch(console.log);
 
 

@@ -7,6 +7,10 @@ info:
   description: API SalesForMe
   vk_app: 5222884
 
+secrets:
+  vk: 12345
+  facebook: 6789
+
 postgres:
   server: 185.26.115.63
   port: 5432
