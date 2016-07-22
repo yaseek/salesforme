@@ -8,12 +8,15 @@ info:
   vk_app: 5222884
 
 secrets:
-  vk: 12345
+  vk: 2KPSXWgZABSk4DmIdXkY
   facebook: 6789
 
 postgres:
-  server: 185.26.115.63
+  host: 185.26.115.63
   port: 5432
   database: salesforme
   user: postgres
   password: postgres
+  connections: 10
+  idleTimeout: 30000
+  

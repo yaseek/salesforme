@@ -1,10 +1,14 @@
 const fs = require('fs'),
       path = require('path');
 
+
 module.exports.config = require('./config');
 module.exports.auth = {
   vk: require('./auth/vk')
 }
+module.exports.db = require('./db');
+module.exports.User = require('./model/user');
+
 
 function loadResources (app, dir) {
   fs.readdir(dir, function (err, files) {

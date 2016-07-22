@@ -20,8 +20,15 @@
   },
   "homepage": "https://github.com/yaseek/salesforme#readme",
   "dependencies": {
+    "cors": "^2.7.1",
     "express": "^4.14.0",
     "js-yaml": "^3.6.1",
-    "request": "^2.73.0"
+    "morgan": "^1.7.0",
+    "node-uuid": "^1.4.7",
+    "pg": "^6.0.3",
+    "pg-then": "^1.2.1",
+    "request": "^2.73.0",
+    "request-promise-native": "^1.0.2",
+    "sql-bricks-postgres": "^0.4.2"
   }
 }

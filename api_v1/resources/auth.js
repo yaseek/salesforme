@@ -9,7 +9,7 @@ module.exports = function (app) {
     var method = core.auth[req.query.id];
 
     if (method && req.query.code) {
-      method(req.query.code)
+      method(req.query)
         .then((out) => res.status(200).send(out))
         .catch((err) => res.status(500).send(err))
     } else {
