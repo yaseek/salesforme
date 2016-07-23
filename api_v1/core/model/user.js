@@ -74,6 +74,17 @@ User.prototype.create = function (data) {
 }
 
 User.prototype.update = function (data) {
-  return Promise.resolve('UPDATE');
+  var user = this;
+  return db.pool.query(
+    sql.update(USERS_SOCIAL, {
+      user: user.uuid,
+      type: data.social.type,
+      user_id: data.social.access_data.user_id,
+      email: data.social.access_data.email,
+      authorized: new Date()
+    })
+    .where({ user: user.uuid })
+    .toParams()
+  )
 }
 
