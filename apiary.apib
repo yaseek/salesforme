@@ -40,21 +40,91 @@ HOST: http://185.26.115.63
 
 + Response  302 (text/plain)
 
-    + Headers
 
-            Location: /
-
-## Авторизация через соцсети [/auth/:name?code=:code]
+## Авторизация через соцсети [/auth/:name?code=:code&redirect_uri=:redirect_uri]
 
 + Parameters
     
     + name -- string, social network name (fb, vk)
     + code -- string, authorization code
+    + redirect_uri -- тот же URL, который был указан в строке запроса авторизации 
+    соцсети при прохождении процедуры OAuth авторизации
 
 ### Запрос авторизации [GET]
 
-+ Response  302 (text/plain)
+В поле `info` ответа содержится нативный ответ соцсети. 
+`uuid` -- пользовательский уникальный номер в системе
+`access_token` -- токен доступа соответствующей соцсети
 
-    + Headers
++ Response 200 (application/json)
 
-            Location: /
+    + Body
+
+            {
+              "access_token": "504d8e578afa1f914110a461cf9a3073fcc1857b94b357889c6b74ac6220ecb6412dfca99faa15e33280d",
+              "uuid": "c354b133-b7cb-4aab-949e-a669e68b9c0d",
+              "info": {
+                "id": 5550055,
+                "first_name": "Иван",
+                "last_name": "Табуреткин",
+                "sex": 2,
+                "nickname": "~=* Ваня *=~",
+                "screen_name": "ivan",
+                "bdate": "23.2.1991",
+                "city": {
+                  "id": 56,
+                  "title": "Ижевск"
+                },
+                "country": {
+                  "id": 1,
+                  "title": "Россия"
+                },
+                "timezone": 4,
+                "photo_50": "http://cs626819.vk.me/v626819050/cb54/Tzd84SRC9ak.jpg",
+                "photo_100": "http://cs626819.vk.me/v626819050/cb53/2C4FwdT0s40.jpg",
+                "photo_200": "http://cs626819.vk.me/v626819050/cb52/1TdyMGseXXg.jpg",
+                "photo_400_orig": "http://cs626819.vk.me/v626819050/cb51/pOwmLtNXdrI.jpg",
+                "photo_id": "7450050_418354035",
+                "has_photo": 1,
+                "online": 0,
+                "home_phone": "",
+                "crop_photo": {
+                  "photo": {
+                    "id": 418354035,
+                    "album_id": -6,
+                    "owner_id": 7450050,
+                    "photo_75": "http://cs626819.vk.me/v626819050/c46a/KOMThfaVITA.jpg",
+                    "photo_130": "http://cs626819.vk.me/v626819050/c46b/mqc0iNQVt6A.jpg",
+                    "photo_604": "http://cs626819.vk.me/v626819050/c46c/iEGXJ1DYlas.jpg",
+                    "photo_807": "http://cs626819.vk.me/v626819050/c46d/ke85EUVY6xk.jpg",
+                    "photo_1280": "http://cs626819.vk.me/v626819050/c46e/9ihZkXSfZB4.jpg",
+                    "width": 1200,
+                    "height": 798,
+                    "text": "",
+                    "date": 1463744339,
+                    "post_id": 3742
+                  },
+                  "crop": {
+                    "x": 19.83,
+                    "y": 11.9,
+                    "x2": 76.83,
+                    "y2": 98.5
+                  },
+                  "rect": {
+                    "x": 25.44,
+                    "y": 24.75,
+                    "x2": 66.52,
+                    "y2": 65.41
+                  }
+                },
+                "verified": 0,
+                "followers_count": 263,
+                "occupation": {
+                  "type": "work",
+                  "id": 95576582,
+                  "name": "65apps"
+                },
+                "home_town": "Ижевск"
+              }
+            }    
+
