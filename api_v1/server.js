@@ -20,7 +20,7 @@ app.get('/info', function(req, res){
 
 core.config.loadConfig(__dirname + '/etc/config.yaml')
   .then(() => {
-    return core.db.init(core.config.postgres);
+    return core.db.init(core.config.postgres)
   })
   .then(() => {
     //app.all('*', core.http.response.prepare);

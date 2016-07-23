@@ -27,7 +27,9 @@ function init (options) {
     };
 
     //resolve(pg.Pool(connstring));
-    resolve(pg.Pool(config));
+    var pool = pg.Pool(config);
+    module.exports.pool = pool;
+    resolve(pool);
   });
 }
 module.exports.init = init;

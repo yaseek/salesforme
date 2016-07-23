@@ -5,6 +5,11 @@ const core = require('./core');
 
 const app = express();
 
+app.get(/^\/api\/v1\/.*/, (req, res) => {
+  var matches = req.path.match(/^\/api\/v1\/(.*)/);
+  res.redirect(`http://localhost:3000/${matches[1]}`);
+})
+
 app.get(/\/.*/, function(req, res){
   var view = req.path.match(/^\/(.*)/),
       modulename = (!view || !view[1].trim()) ? 'index' : view[1].trim();

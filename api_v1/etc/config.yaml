@@ -6,15 +6,17 @@ info:
   version: 1.0.0
   description: API SalesForMe
   vk_app: 5222884
+  vk_api_version: "5.52"
+  fb_app: 152750598427241
 
 secrets:
   vk: 2KPSXWgZABSk4DmIdXkY
-  facebook: 6789
+  facebook: d1bcfbf672e1f8ef9565c34f6a1ccaaa
 
 postgres:
   host: 185.26.115.63
   port: 5432
-  database: salesforme
+  database: sales4me
   user: postgres
   password: postgres
   connections: 10
