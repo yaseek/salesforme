@@ -38,7 +38,11 @@ User.prototype.auth = function (data) {
       return method.call(user, { social: data })        
     })
     .then(resolve)
-    .catch(reject)
+    //.catch(reject)
+    .catch((err) => {
+      console.log('ERRRR', err, err.stack);
+      reject(err);
+    })
   });
 }
 
