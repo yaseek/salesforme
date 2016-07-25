@@ -49,7 +49,7 @@ function auth (query) {
         return {
           access_token: access_data.access_token,
           uuid: user.uuid,
-          info: info.response[0],
+          info: info,
           access_data: access_data
         }
       })
