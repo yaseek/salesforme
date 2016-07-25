@@ -35,6 +35,7 @@ User.prototype.auth = function (data) {
         if (!out.rowCount) {
           method = user.create;
         } else {
+          console.log('METHOD UPDATE', out.rows[0]);
           user.setuuid(out.rows[0].user);
           method = user.update;
         }
@@ -78,7 +79,7 @@ User.prototype.create = function (data) {
 
 User.prototype.update = function (data) {
   var user = this;
-  //console.log('UPDATE', data);
+  console.log('UPDATE', data, user);
 
   return db.pool.query(
     sql.select()
