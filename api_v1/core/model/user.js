@@ -97,7 +97,7 @@ User.prototype.update = function (data) {
         })
         .where({ serial: out.rows[0].serial })
         .toParams()
-      )
+      ).catch(console.log)
     } else {
       return db.pool.query( 
         sql.insert(USERS_SOCIAL, {
