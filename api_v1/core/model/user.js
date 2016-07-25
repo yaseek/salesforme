@@ -110,7 +110,7 @@ User.prototype.update = function (data) {
       )
     }
   })
-  //.catch(console.log)
+  .catch(console.log)
 
 }
 
