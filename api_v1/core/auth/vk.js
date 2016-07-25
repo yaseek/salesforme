@@ -42,7 +42,7 @@ function auth (query) {
 
     return user.auth({
       type: 'VK',
-      user_id: info.user_id,
+      user_id: access_data.user_id,
       email: access_data.email,
       access_data: access_data
     })

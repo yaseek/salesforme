@@ -4,7 +4,8 @@ const fs = require('fs'),
 
 module.exports.config = require('./config');
 module.exports.auth = {
-  vk: require('./auth/vk')
+  vk: require('./auth/vk'),
+  fb: require('./auth/fb')
 }
 module.exports.db = require('./db');
 module.exports.User = require('./model/user');
