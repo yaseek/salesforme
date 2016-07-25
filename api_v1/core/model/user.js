@@ -78,6 +78,7 @@ User.prototype.create = function (data) {
 
 User.prototype.update = function (data) {
   var user = this;
+  console.log('UPDATE', data);
 
   return db.pool.query(
     sql.select()
@@ -100,7 +101,7 @@ User.prototype.update = function (data) {
         .toParams()
       )
     } else {
-      return db.pool.query(
+      return db.pool.query( 
         sql.insert(USERS_SOCIAL, {
           user: user.uuid,
           type: data.social.type,
@@ -112,6 +113,7 @@ User.prototype.update = function (data) {
       )
     }
   })
+  .catch(console.log)
 
 }
 
