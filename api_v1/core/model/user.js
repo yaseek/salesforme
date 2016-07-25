@@ -91,6 +91,7 @@ User.prototype.update = function (data) {
       .toParams()
   )
   .then((out) => {
+    console.log('OUT', out);
     if (out.rowCount) {
       return db.pool.query(
         sql.update(USERS_SOCIAL, {
