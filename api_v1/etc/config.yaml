@@ -8,10 +8,25 @@ info:
   vk_app: 5222884
   vk_api_version: "5.52"
   fb_app: 152750598427241
+  google_app: 799617381412-qg9dbdsmtfr0aiui4o11btj0a368l3gh.apps.googleusercontent.com 
 
 secrets:
   vk: 2KPSXWgZABSk4DmIdXkY
   facebook: d1bcfbf672e1f8ef9565c34f6a1ccaaa
+  google: rICZWHSuk5VWYYJF8MWWSMU0
+
+auth:
+  google:
+    client_id: 799617381412-qg9dbdsmtfr0aiui4o11btj0a368l3gh.apps.googleusercontent.com
+    auth_uri: https://accounts.google.com/o/oauth2/auth 
+    secret: rICZWHSuk5VWYYJF8MWWSMU0
+  vk:
+    client_id: 5222884
+    api_version: "5.52"
+    secret: 2KPSXWgZABSk4DmIdXkY
+  facebook:
+    client_id: 152750598427241
+    secret: d1bcfbf672e1f8ef9565c34f6a1ccaaa
 
 postgres:
   host: 185.26.115.63
