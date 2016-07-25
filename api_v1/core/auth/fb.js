@@ -19,6 +19,7 @@ function auth (query) {
   })
   .then((out) => {
     access_data = JSON.parse(out);
+    console.log('FB ACCESS DATA', access_data);
 
     return request.get({
       uri: 'https://graph.facebook.com/v2.7/me',
@@ -35,6 +36,7 @@ function auth (query) {
   })
   .then((out) => {
     var info = JSON.parse(out);
+    console.log('INFO', info);
 
     var user = new core.User();
 
