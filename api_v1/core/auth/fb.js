@@ -44,7 +44,6 @@ function auth (query) {
       type: 'FB',
       user_id: info.id,
       email: info.email,
-      access_data: access_data
     })
       .then(() => {
         return {

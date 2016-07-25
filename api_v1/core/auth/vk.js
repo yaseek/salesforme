@@ -19,6 +19,7 @@ function auth (query) {
   })
   .then((out) => {
     access_data = JSON.parse(out);
+    console.log('VK ACCESS DATA', access_data);
 
     return request.get({
       uri: 'https://api.vk.com/method/users.get',
@@ -37,14 +38,14 @@ function auth (query) {
   })
   .then((out) => {
     var info = JSON.parse(out);
+    console.log('INFO', info);
 
     var user = new core.User();
 
     return user.auth({
       type: 'VK',
       user_id: access_data.user_id,
-      email: access_data.email,
-      access_data: access_data
+      email: access_data.email
     })
       .then(() => {
         return {

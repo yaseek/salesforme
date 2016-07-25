@@ -21,10 +21,6 @@ User.prototype.auth = function (data) {
     db.pool.query(
       sql.select()
         .from(VIEW_SOCIAL)
-        /*.where({
-          type: data.type,
-          user_id: data.access_data.user_id
-        })*/
         .where({
           email: data.email
         })
