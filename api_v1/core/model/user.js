@@ -78,7 +78,7 @@ User.prototype.create = function (data) {
 
 User.prototype.update = function (data) {
   var user = this;
-  console.log('UPDATE', data);
+  //console.log('UPDATE', data);
 
   return db.pool.query(
     sql.select()
@@ -91,7 +91,7 @@ User.prototype.update = function (data) {
       .toParams()
   )
   .then((out) => {
-    console.log('OUT', out);
+    //console.log('OUT', out);
     if (out.rowCount) {
       return db.pool.query(
         sql.update(USERS_SOCIAL, {
@@ -109,12 +109,11 @@ User.prototype.update = function (data) {
           user_id: data.social.access_data.user_id,
           email: data.social.access_data.email
         })
-        .where({ serial: out.rows[0].serial })
         .toParams()
       )
     }
   })
-  .catch(console.log)
+  //.catch(console.log)
 
 }
 
