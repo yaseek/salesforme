@@ -39,7 +39,7 @@ User.prototype.auth = function (data) {
           user.setuuid(out.rows[0].user);
           method = user.update;
         }
-      return method({ social: data })
+      return method.call(user, { social: data })
         .then(resolve, reject);
     })
     .catch(reject)
