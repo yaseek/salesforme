@@ -6,3 +6,8 @@ templates:
   views: /srv/frontend/public_html/ejs
   engine: ejs
   
+redirect:
+  -
+    resource: /login/vkontakte
+    redirect_uri: https://oauth.vk.com/authorize?client_id=5222884&redirect_uri=http://salesforme.yaseek.ru/auth/vk&display=page&scope=photos,email&response_type=code&v=5.52 
+    

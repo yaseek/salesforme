@@ -21,9 +21,12 @@ User.prototype.auth = function (data) {
     db.pool.query(
       sql.select()
         .from(VIEW_SOCIAL)
-        .where({
+        /*.where({
           type: data.type,
           user_id: data.access_data.user_id
+        })*/
+        .where({
+          email: data.email
         })
         .toParams()
     )
@@ -75,16 +78,40 @@ User.prototype.create = function (data) {
 
 User.prototype.update = function (data) {
   var user = this;
+
   return db.pool.query(
-    sql.update(USERS_SOCIAL, {
-      user: user.uuid,
-      type: data.social.type,
-      user_id: data.social.access_data.user_id,
-      email: data.social.access_data.email,
-      authorized: new Date()
-    })
-    .where({ user: user.uuid })
-    .toParams()
+    sql.select()
+      .from(USERS_SOCIAL)
+      .where({
+        user: user.uuid,
+        type: data.social.type,
+        user_id: data.social.access_data.user_id
+      })
+      .toParams()
   )
+  .then((out) => {
+    if (out.rowCount) {
+      return db.pool.query(
+        sql.update(USERS_SOCIAL, {
+          email: data.social.access_data.email,
+          authorized: new Date()
+        })
+        .where({ serial: out.rows[0].serial })
+        .toParams()
+      )
+    } else {
+      return db.pool.query(
+        sql.insert(USERS_SOCIAL, {
+          user: user.uuid,
+          type: data.social.type,
+          user_id: data.social.access_data.user_id,
+          email: data.social.access_data.email
+        })
+        .where({ serial: out.rows[0].serial })
+        .toParams()
+      )
+    }
+  })
+
 }
 

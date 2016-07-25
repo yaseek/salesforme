@@ -42,6 +42,7 @@ function auth (query) {
 
     return user.auth({
       type: 'VK',
+      email: access_data.email,
       access_data: access_data
     })
       .then(() => {
