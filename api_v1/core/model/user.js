@@ -68,8 +68,8 @@ User.prototype.create = function (data) {
       sql.insert(USERS_SOCIAL, {
         user: user.uuid,
         type: data.social.type,
-        user_id: data.social.access_data.user_id,
-        email: data.social.access_data.email
+        user_id: data.social.user_id,
+        email: data.social.email
       })
       .toParams()
     )
@@ -87,7 +87,7 @@ User.prototype.update = function (data) {
       .where({
         user: user.uuid,
         type: data.social.type,
-        user_id: data.social.access_data.user_id
+        user_id: data.social.user_id
       })
       .toParams()
   )
@@ -96,7 +96,7 @@ User.prototype.update = function (data) {
     if (out.rowCount) {
       return db.pool.query(
         sql.update(USERS_SOCIAL, {
-          email: data.social.access_data.email,
+          email: data.social.email,
           authorized: new Date()
         })
         .where({ serial: out.rows[0].serial })
@@ -107,8 +107,8 @@ User.prototype.update = function (data) {
         sql.insert(USERS_SOCIAL, {
           user: user.uuid,
           type: data.social.type,
-          user_id: data.social.access_data.user_id,
-          email: data.social.access_data.email
+          user_id: data.social.user_id,
+          email: data.social.email
         })
         .toParams()
       )

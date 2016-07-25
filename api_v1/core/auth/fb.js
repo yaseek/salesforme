@@ -9,10 +9,10 @@ function auth (query) {
   //console.log('QUERY', query);
   var access_data;
   return request.get({
-    uri: 'https://oauth.vk.com/access_token',
+    uri: 'https://graph.facebook.com/v2.3/oauth/access_token',
     qs: {
-      client_id: core.config.info.vk_app,
-      client_secret: core.config.secrets.vk,
+      client_id: core.config.auth.facebook.client_id,
+      client_secret: core.config.auth.facebook.secret,
       code: query.code,
       redirect_uri: query.redirect_uri
     }
@@ -21,17 +21,15 @@ function auth (query) {
     access_data = JSON.parse(out);
 
     return request.get({
-      uri: 'https://api.vk.com/method/users.get',
+      uri: 'https://graph.facebook.com/v2.7/me',
       qs: {
         access_token: access_data.access_token,
-        v: core.config.info.vk_api_version,
-        fields: `photo_id, verified, sex, bdate, city, country, home_town, has_photo, 
-          photo_50, photo_100, photo_200, photo_400_orig, 
-          online, contacts, 
-          followers_count, 
-          occupation, nickname, 
-          timezone, 
-          screen_name, maiden_name, crop_photo`
+        fields: [
+          'name',
+          'id',
+          'email',
+          'picture'
+        ].join(',')
       }
     })
   })
@@ -41,9 +39,9 @@ function auth (query) {
     var user = new core.User();
 
     return user.auth({
-      type: 'VK',
-      user_id: info.user_id,
-      email: access_data.email,
+      type: 'FB',
+      user_id: info.id,
+      email: info.email,
       access_data: access_data
     })
       .then(() => {
