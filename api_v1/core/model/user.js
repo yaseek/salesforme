@@ -35,9 +35,9 @@ User.prototype.auth = function (data) {
           user.setuuid(out.rows[0].user);
           method = user.update;
         }
-      return method.call(user, { social: data })
-        .then(resolve);
+      return method.call(user, { social: data })        
     })
+    .then(resolve)
     .catch(reject)
   });
 }
@@ -97,7 +97,7 @@ User.prototype.update = function (data) {
         })
         .where({ serial: out.rows[0].serial })
         .toParams()
-      ).then(console.log, console.log);
+      )
     } else {
       return db.pool.query( 
         sql.insert(USERS_SOCIAL, {
