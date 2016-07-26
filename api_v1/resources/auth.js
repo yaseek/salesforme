@@ -26,7 +26,7 @@ module.exports = function (app) {
     var user = new core.User();
     user.checkAuth(req.body)
       .then((out) => {
-        res.status(200).send(out);  
+        res.status(200).send(new res.Response(out));  
       })    
       .catch((err) => {
         res.status(401).send('Authorisation failed');
@@ -40,11 +40,8 @@ module.exports = function (app) {
     }
 
     var user = new core.User();
-    user.checkExistsUser({user_id: req.body.email, type: 'native'})
-    .then((out) => {
-      res.status(400).send('Already exists');
-    })
-    .catch(() => {
+    user.checkNotExistsUser({user_id: req.body.email, type: 'native'})
+    .then(() => {
       user.auth({
         type: 'native',
         user_id: req.body.email,
@@ -63,11 +60,14 @@ module.exports = function (app) {
         return out;
       })
       .then((out) => {
-        res.status(200).send(out);
+        res.status(200).send(new res.Response(out));
       })
       .catch((err) => {
         res.status(500).send(err);
       })
+    })
+    .catch((err) => {
+      res.status(400).send('User already exists');
     })
   })
 

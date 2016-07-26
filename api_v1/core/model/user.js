@@ -132,6 +132,20 @@ User.prototype.update = function (data) {
 
 }
 
+User.prototype.checkNotExistsUser = function (query) {
+  var user = this;
+
+  return db.pool.query(
+    sql.select()
+      .from(USERS_SOCIAL)
+      .where(query)
+      .toParams()
+  ).then((out) => {
+    if (!out.rowCount) return Promise.resolve();
+    return Promise.reject();
+  })
+}
+
 User.prototype.checkAuth = function (data) {
   var user = this;
 

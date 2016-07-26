@@ -10,6 +10,8 @@ module.exports.auth = {
 module.exports.db = require('./db');
 module.exports.User = require('./model/user');
 
+module.exports.response = require('./http/response');
+
 var Mailer = require('./model/mailer');
 module.exports.mailer = new Mailer();
 
