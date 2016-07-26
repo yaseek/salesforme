@@ -10,6 +10,8 @@ module.exports.auth = {
 module.exports.db = require('./db');
 module.exports.User = require('./model/user');
 
+var Mailer = require('./model/mailer');
+module.exports.mailer = new Mailer();
 
 function loadResources (app, dir) {
   fs.readdir(dir, function (err, files) {

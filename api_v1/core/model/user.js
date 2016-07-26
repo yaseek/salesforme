@@ -1,14 +1,18 @@
 
+const assert = require('assert');
+
 const core = require('../'),
       db = core.db;
 
 const uuid = require('node-uuid'),
-      sql = require('sql-bricks-postgres');
+      sql = require('sql-bricks-postgres'),
+      passwordHash = require('password-hash');
 
 const USERS = 'users',
       USERS_SOCIAL = 'users_social',
       VIEW_USERS = 'v_users',
-      VIEW_SOCIAL = 'v_users_social';      
+      VIEW_SOCIAL = 'v_users_social',
+      VIEW_USERS_NATIVE = 'v_users_native';      
 
 function User (uuid) {
   this.uuid = uuid;
@@ -37,7 +41,18 @@ User.prototype.auth = function (data) {
         }
       return method.call(user, { social: data })        
     })
-    .then(resolve)
+    .then(() => {
+      if (!!data.password) {
+        return db.pool.query(
+          sql.update(USERS, {
+            password: user.setPassword(data.password)
+          })
+            .where({uuid: user.uuid})
+            .toParams()
+        )
+      }
+    })
+    .then(() => resolve(user.uuid))
     //.catch(reject)
     .catch((err) => {
       console.log('ERRRR', err, err.stack);
@@ -115,5 +130,32 @@ User.prototype.update = function (data) {
     }
   })
 
+}
+
+User.prototype.checkAuth = function (data) {
+  var user = this;
+
+  return db.pool.query(
+    sql.select('uuid, password')
+      .from(VIEW_USERS_NATIVE)
+      .where({email: data.email})
+      .toParams()
+  )
+  .then((out) => {
+    if (!out.rowCount) return Promise.reject('undefined user');
+    assert(user.checkPassword(data.password, out.rows[0].password),
+      'user/password undefined');
+    return out.rows[0].uuid;
+  })
+}
+
+User.prototype.setPassword = function (plainPassword) {
+  var user = this;
+  return passwordHash.generate(plainPassword);  
+}
+
+User.prototype.checkPassword = function (plainPassword, cryptedPassword) {
+  var user = this;
+  return passwordHash.verify(plainPassword, cryptedPassword);
 }
 

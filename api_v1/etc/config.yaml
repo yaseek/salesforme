@@ -28,6 +28,18 @@ auth:
     client_id: 152750598427241
     secret: d1bcfbf672e1f8ef9565c34f6a1ccaaa
 
+mail:
+#  host: smtp.yandex.ru
+#  port: 25
+#  secure: true
+  service: Yandex
+  auth:
+    user: ab@izh.com
+    pass: 84eEVCWB7v
+
+admin:
+  fromAddress: Системный администратор <ab@izh.com>
+
 postgres:
   host: 185.26.115.63
   port: 5432

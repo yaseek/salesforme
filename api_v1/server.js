@@ -4,7 +4,8 @@ const path = require('path');
 const express = require('express');
 
 const morgan = require('morgan'),
-      cors = require('cors');
+      cors = require('cors'),
+      bodyParser = require('body-parser');
 
 const core = require('./core');
 
@@ -12,6 +13,8 @@ const app = express();
 
 app.use(cors());
 app.use(morgan('short'));
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 app.get('/info', function(req, res){
   console.log('CONFIG', core.config.info);
@@ -20,7 +23,10 @@ app.get('/info', function(req, res){
 
 core.config.loadConfig(__dirname + '/etc/config.yaml')
   .then(() => {
-    return core.db.init(core.config.postgres)
+    return core.db.init(core.config.postgres);
+  })
+  .then(() => {
+    core.mailer.init(core.config.mail);
   })
   .then(() => {
     //app.all('*', core.http.response.prepare);
