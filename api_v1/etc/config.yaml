@@ -17,6 +17,7 @@ secrets:
 
 auth:
   google:
+    #https://accounts.google.com/o/oauth2/auth?response_type=code&client_id=799617381412-qg9dbdsmtfr0aiui4o11btj0a368l3gh.apps.googleusercontent.com&redirect_uri=http://salesforme.yaseek.ru/auth/google&scope=email
     client_id: 799617381412-qg9dbdsmtfr0aiui4o11btj0a368l3gh.apps.googleusercontent.com
     auth_uri: https://accounts.google.com/o/oauth2/auth 
     secret: rICZWHSuk5VWYYJF8MWWSMU0

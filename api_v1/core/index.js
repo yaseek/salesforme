@@ -5,7 +5,8 @@ const fs = require('fs'),
 module.exports.config = require('./config');
 module.exports.auth = {
   vk: require('./auth/vk'),
-  fb: require('./auth/fb')
+  fb: require('./auth/fb'),
+  google: require('./auth/google')
 }
 module.exports.db = require('./db');
 module.exports.User = require('./model/user');
