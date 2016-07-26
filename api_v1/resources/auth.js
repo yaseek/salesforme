@@ -3,7 +3,6 @@ const core = require('../core');
 
 module.exports = function (app) {
 
-  //http://localhost:4000/auth?id=vk&code=ed255373d658685e66
   app.get( '/auth', (req, res) => {
     
     var method = core.auth[req.query.id];
@@ -16,12 +15,12 @@ module.exports = function (app) {
           throw Error(err);
         })
     } else {
-      res.status(403).send('undefined parameters');
+      res.handleError({code: 403, message: 'UNDEFINED_PARAMS'})
     }
   });
 
   app.post( '/auth', (req, res) => {
-    console.log('BODY', req.body);  
+    //console.log('BODY', req.body);  
     
     var user = new core.User();
     user.checkAuth(req.body)
@@ -29,7 +28,7 @@ module.exports = function (app) {
         res.status(200).send(new res.Response(out));  
       })    
       .catch((err) => {
-        res.status(401).send('Authorisation failed');
+        res.handleError({code: 401, message: 'AUTH_FAILED'})
       })
   })
 
@@ -67,7 +66,7 @@ module.exports = function (app) {
       })
     })
     .catch((err) => {
-      res.status(400).send('User already exists');
+      res.handleError({code: 400, message: 'ALREADY_EXISTS'})
     })
   })
 
