@@ -49,7 +49,7 @@ function auth (query) {
   })
   .then(() => {
     return {
-      access_data: access_data
+      access_data: access_data,
       info: info
     }
   })
