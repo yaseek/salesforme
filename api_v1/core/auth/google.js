@@ -15,7 +15,9 @@ function auth (query) {
     grant_type: 'authorization_code'
   }
   console.log('QUERY', query, request_data);
-  return request.post('https://www.googleapis.com/oauth2/v4/token', request_data)
+  return request.get('https://www.googleapis.com/oauth2/v4/token', {
+    qs: request_data
+  })
   .then((out) => {
     access_data = JSON.parse(out);
     console.log('VK ACCESS DATA', access_data);
