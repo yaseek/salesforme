@@ -9,7 +9,7 @@ function auth (query) {
   var access_data, info;
 
   console.log('QUERY', query);
-  
+
   return request.post('https://www.googleapis.com/oauth2/v4/token', {
     form: {
       client_id: core.config.auth.google.client_id,
@@ -42,7 +42,7 @@ function auth (query) {
 
     if (!account) return Promise.reject('NO_EMAIL_ASSIGNED');
     return user.auth({
-      type: 'VK',
+      type: 'GOOGLE+',
       user_id: info.id,
       email: account.value
     })
