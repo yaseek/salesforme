@@ -6,15 +6,16 @@ const request = require('request-promise-native');
 const core = require('../');
 
 function auth (query) {
-  //console.log('QUERY', query);
   var access_data;
-  return request.post('https://www.googleapis.com/oauth2/v4/token', {
+  var request_data = {
     client_id: core.config.auth.google.client_id,
     client_secret: core.config.auth.google.secret,
     code: query.code,
     redirect_uri: query.redirect_uri,
     grant_type: 'authorization_code'
-  })
+  }
+  console.log('QUERY', query, request_data);
+  return request.post('https://www.googleapis.com/oauth2/v4/token', request_data)
   .then((out) => {
     access_data = JSON.parse(out);
     console.log('VK ACCESS DATA', access_data);
