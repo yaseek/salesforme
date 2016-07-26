@@ -6,7 +6,8 @@ module.exports.config = require('./config');
 module.exports.auth = {
   vk: require('./auth/vk'),
   fb: require('./auth/fb'),
-  google: require('./auth/google')
+  google: require('./auth/google'),
+  mailru: require('./auth/mailru')
 }
 module.exports.db = require('./db');
 module.exports.User = require('./model/user');
