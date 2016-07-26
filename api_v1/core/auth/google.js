@@ -8,15 +8,12 @@ const core = require('../');
 function auth (query) {
   //console.log('QUERY', query);
   var access_data;
-  return request.get({
-    uri: 'https://www.googleapis.com/oauth2/v4/token',
-    qs: {
-      client_id: core.config.auth.google.client_id,
-      client_secret: core.config.auth.google.secret,
-      code: query.code,
-      redirect_uri: query.redirect_uri,
-      grant_type: 'authorization_code'
-    }
+  return request.post('https://www.googleapis.com/oauth2/v4/token', {
+    client_id: core.config.auth.google.client_id,
+    client_secret: core.config.auth.google.secret,
+    code: query.code,
+    redirect_uri: query.redirect_uri,
+    grant_type: 'authorization_code'
   })
   .then((out) => {
     access_data = JSON.parse(out);
