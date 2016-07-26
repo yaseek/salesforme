@@ -47,8 +47,9 @@ function auth (query) {
       email: account.value
     })
   })
-  .then(() => {
+  .then((out) => {
     return {
+      out: out,
       access_data: access_data,
       info: info
     }
