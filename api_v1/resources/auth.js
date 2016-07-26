@@ -9,10 +9,9 @@ module.exports = function (app) {
 
     if (method && req.query.code) {
       method(req.query)
-        .then((out) => res.status(200).send(out))
+        .then((out) => res.status(200).send(new res.Response(out)))
         .catch((err) => {
           res.status(500).send(err);
-          throw Error(err);
         })
     } else {
       res.handleError({code: 403, message: 'UNDEFINED_PARAMS'})
@@ -24,8 +23,8 @@ module.exports = function (app) {
     
     var user = new core.User();
     user.checkAuth(req.body)
-      .then((out) => {
-        res.status(200).send(new res.Response(out));  
+      .then((uuid) => {
+        res.status(200).send(new res.Response({uuid:uuid}));  
       })    
       .catch((err) => {
         res.handleError({code: 401, message: 'AUTH_FAILED'})
@@ -35,7 +34,7 @@ module.exports = function (app) {
   app.post( '/auth/native', (req, res) => {
 
     if (!req.body.email || !req.body.password) {
-      return res.status(500).send('bad args');
+      return res.handleError({code: 500, message: 'NOT_ENOUGH_ARGS'});
     }
 
     var user = new core.User();
@@ -58,11 +57,11 @@ module.exports = function (app) {
         })
         return out;
       })
-      .then((out) => {
-        res.status(200).send(new res.Response(out));
+      .then((uuid) => {
+        res.status(200).send(new res.Response({uuid:uuid}));
       })
       .catch((err) => {
-        res.status(500).send(err);
+        res.handleError(err);
       })
     })
     .catch((err) => {
