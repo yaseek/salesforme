@@ -8,20 +8,20 @@ const core = require('../');
 function auth (query) {
   var access_data, info;
 
-  var request_data = {
-    client_id: core.config.auth.google.client_id,
-    client_secret: core.config.auth.google.secret,
-    code: query.code,
-    redirect_uri: query.redirect_uri,
-    grant_type: 'authorization_code'
-  }
-  console.log('QUERY', query, request_data);
+  console.log('QUERY', query);
+  
   return request.post('https://www.googleapis.com/oauth2/v4/token', {
-    form: request_data
+    form: {
+      client_id: core.config.auth.google.client_id,
+      client_secret: core.config.auth.google.secret,
+      code: query.code,
+      redirect_uri: query.redirect_uri,
+      grant_type: 'authorization_code'
+    }
   })
   .then((out) => {
     access_data = JSON.parse(out);
-    console.log('VK ACCESS DATA', access_data);
+    //console.log('VK ACCESS DATA', access_data);
 
     return request.get({
       uri: 'https://www.googleapis.com/plus/v1/people/me',
@@ -32,7 +32,7 @@ function auth (query) {
   })
   .then((out) => {
     info = JSON.parse(out);
-    console.log('INFO', info);
+    //console.log('INFO', info);
 
     var user = new core.User();
 
@@ -47,9 +47,10 @@ function auth (query) {
       email: account.value
     })
   })
-  .then((out) => {
+  .then((uuid) => {
     return {
-      out: out,
+      access_token: access_data.access_token,
+      uuid: uuid,
       access_data: access_data,
       info: info
     }
