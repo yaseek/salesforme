@@ -48,8 +48,10 @@ function auth (query) {
     })
   })
   .then((out) => {
-    info = JSON.parse(out);
+    var results = JSON.parse(out);
     //console.log('INFO', info);
+    if (!results.length) return Promise.reject('NO_DATA');
+    info = results[0];
 
     var user = new core.User();
 
