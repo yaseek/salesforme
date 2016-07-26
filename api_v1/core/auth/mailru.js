@@ -53,11 +53,11 @@ function auth (query) {
 
     var user = new core.User();
 
-    return user.auth({
+    /*return user.auth({
       type: 'MAIL.RU',
       user_id: info.uid,
       email: info.email
-    })
+    })*/
   })
   .then((uuid) => {
     return {
