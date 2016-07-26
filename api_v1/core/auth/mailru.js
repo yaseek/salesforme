@@ -40,7 +40,7 @@ function auth (query) {
     hash.update(param_string + core.config.auth.mailru.secret);
     params.sig = hash.digest('hex');
 
-    console.log('PARAMS', params);
+    //console.log('PARAMS', params);
 
     return request.get({
       uri: 'http://www.appsmail.ru/platform/api',
@@ -53,12 +53,11 @@ function auth (query) {
 
     var user = new core.User();
 
-    /*if (!account) return Promise.reject('NO_EMAIL_ASSIGNED');
     return user.auth({
-      type: 'GOOGLE+',
-      user_id: info.id,
-      email: account.value
-    })*/
+      type: 'MAIL.RU',
+      user_id: info.uid,
+      email: info.email
+    })
   })
   .then((uuid) => {
     return {
