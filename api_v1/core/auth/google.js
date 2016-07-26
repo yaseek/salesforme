@@ -6,7 +6,8 @@ const request = require('request-promise-native');
 const core = require('../');
 
 function auth (query) {
-  var access_data;
+  var access_data, info;
+
   var request_data = {
     client_id: core.config.auth.google.client_id,
     client_secret: core.config.auth.google.secret,
@@ -22,36 +23,34 @@ function auth (query) {
     access_data = JSON.parse(out);
     console.log('VK ACCESS DATA', access_data);
 
-    /*return request.get({
-      uri: 'https://api.vk.com/method/users.get',
+    return request.get({
+      uri: 'https://www.googleapis.com/plus/v1/people/me',
       qs: {
-        access_token: access_data.access_token,
-        v: core.config.info.vk_api_version,
-        fields: `photo_id, verified, sex, bdate, city, country, home_town, has_photo, 
-          photo_50, photo_100, photo_200, photo_400_orig, 
-          online, contacts, 
-          followers_count, 
-          occupation, nickname, 
-          timezone, 
-          screen_name, maiden_name, crop_photo`
+        access_token: access_data.access_token
       }
-    })*/
+    })
   })
-  /*.then((out) => {
-    var info = JSON.parse(out);
+  .then((out) => {
+    info = JSON.parse(out);
     console.log('INFO', info);
 
     var user = new core.User();
 
+    var account = (info.emails || []).reduce((p, c) => {
+      return p || ( c.type === 'account' ? c : null);
+    }, null);
+
+    if (!account) return Promise.reject('NO_EMAIL_ASSIGNED');
     return user.auth({
       type: 'VK',
-      user_id: access_data.user_id,
-      email: access_data.email
+      user_id: info.id,
+      email: account.value
     })
-  })*/
+  })
   .then(() => {
     return {
       access_data: access_data
+      info: info
     }
   })
 
