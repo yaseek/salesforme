@@ -8,7 +8,7 @@ const core = require('../');
 function auth (query) {
   var access_data, info;
 
-  console.log('QUERY', query);
+  //console.log('QUERY', query);
 
   return request.post('https://www.googleapis.com/oauth2/v4/token', {
     form: {
