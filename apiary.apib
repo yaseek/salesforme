@@ -13,17 +13,17 @@ HOST: http://185.26.115.63
 
 + Response 200 (application/json)
 
-  + Body
+    + Body
     
-      {
-        "version": "1.0.0",
-        "description": "API SalesForMe",
-        "vk_app": 5222884,
-        "vk_api_version": "5.52",
-        "fb_app": 152750598427241,
-        "google_app": "799617381412-qg9dbdsmtfr0aiui4o11btj0a368l3gh.apps.googleusercontent.com",
-        "mailru_app": 746248
-      }
+        {
+            "version": "1.0.0",
+            "description": "API SalesForMe",
+            "vk_app": 5222884,
+            "vk_api_version": "5.52",
+            "fb_app": 152750598427241,
+            "google_app": "799617381412-qg9dbdsmtfr0aiui4o11btj0a368l3gh.apps.googleusercontent.com",
+            "mailru_app": 746248
+        }
 
 ## Прямая авторизация пользователя [/auth]
 
@@ -31,33 +31,33 @@ HOST: http://185.26.115.63
 
 + Request (x-www-form-urlencoded)
 
-      "username": "testuser",
-      "password": "userpassword",
-      "csrf": "<csrf code>"
+            "username": "testuser",
+            "password": "userpassword",
+            "csrf": "<csrf code>"
 
 + Request (application/json)
 
-  + Body
+    + Body
 
-      {
-        "username": "testuser",
-        "password": "userpassword",
-        "csrf": "<csrf code>"
-      }
+            {
+                "username": "testuser",
+                "password": "userpassword",
+                "csrf": "<csrf code>"
+            }
 
 + Response  200 (application/json)
 
   + Body
 
-      {
-        "meta": { },
-        "result": {
-          "sid": "c354b133-b7cb-4aab-949e-a669e68b9c0d.1469648474933.51a4824a1fdc629a3f30886290d26828b036edb6",
-          "auth": {
-            "uuid": "c354b133-b7cb-4aab-949e-a669e68b9c0d"
-          }
-        }
-      }
+            {
+                "meta": { },
+                "result": {
+                    "sid": "c354b133-b7cb-4aab-949e-a669e68b9c0d.1469648474933.51a4824a1fdc629a3f30886290d26828b036edb6",
+                    "auth": {
+                        "uuid": "c354b133-b7cb-4aab-949e-a669e68b9c0d"
+                    }
+                }
+            }
 
 
 ## Авторизация через соцсети [/auth/:name?code=:code&redirect_uri=:redirect_uri]
@@ -73,25 +73,26 @@ HOST: http://185.26.115.63
 
 + `sid` -- идентификатор сессии пользователя, используется в заголовке `x-session-id` 
 + `auth`:
-  + `uuid` -- пользовательский уникальный номер в системе
-  + `access_data` -- авторизационные данные соцсети
+    + `uuid` -- пользовательский уникальный номер в системе
+    + `access_data` -- авторизационные данные соцсети
 
 + Response 200 (application/json)
 
     + Body
 
-      {
-        "meta": {},
-        "result": {
-          "sid": "0ab372c9-2d4b-4c47-8373-b764d92c6092.1469648167592.0e7dbffba0fabce18341e1ce407c452b7d33567d",
-          "auth": {
-            "uuid": "0ab372c9-2d4b-4c47-8373-b764d92c6092",
-            "access_data": {
-              "access_token": "ya29.CjAtA-dWSM-80aOnvwa96zvfUBHdHn7p8oJuHCU4-ew6PVPyQrr2zSeMAEv-VKCGT5A",
-              "token_type": "Bearer",
-              "expires_in": 3599,
-              "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUwNzgyYmNmMGE5NzQxZTZiZjkwMjY2ZGMzNTY4YWE5MDc5MWYxNmYifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhdF9oYXNoIjoiVkV4eHVxc0FSbG4zQ3RCNkFaM0NjQSIsImF1ZCI6Ijc5OTYxNzM4MTQxMi1xZzlkYmRzbXRmcjBhaXVpNG8xMWJ0ajBhMzY4bDNnaC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwNDAyNTY0MzY2MzI1MTM3NjQ3NCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhenAiOiI3OTk2MTczODE0MTItcWc5ZGJkc210ZnIwYWl1aTRvMTFidGowYTM2OGwzZ2guYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJoZCI6IjY1YXBwcy5jb20iLCJlbWFpbCI6ImFiYWJraW5ANjVhcHBzLmNvbSIsImlhdCI6MTQ2OTY0ODE2NywiZXhwIjoxNDY5NjUxNzY3fQ.RnvEDNe6k5ttX00I2bbFbT3ZilaPu3ZqqBXIKTLj7WaFx7Alw6W4yZO_FGTYDxCedr0O0nOg6xh5J4buPK26Pbt57XnZqyYMEucHUjuXz3VOFOIRb_lqTAW5YOM7TvylHJF_mMIzH5HjXVgkdj8Jdtl29-J3q-sFhMmHzm45EPKPp9kwnO4eVK1mhLk7YmmQP8dwSFi-a-0Ti8LZNMm7fPEw9AvXujwcrLIPjZVOmC_udrAcUNWaz46QrHtsB3c9dX-kyjkfvS3MZ9xwTlLyglvx6LxI2iBK1etl6Pt5cXxaEM-wAFE4mteDLFtXxaO6yCcHnOKW2nRt7roWZ-Z6PA"
+            {
+                "meta": {},
+                "result": {
+                    "sid": "0ab372c9-2d4b-4c47-8373-b764d92c6092.1469648167592.0e7dbffba0fabce18341e1ce407c452b7d33567d",
+                    "auth": {
+                        "uuid": "0ab372c9-2d4b-4c47-8373-b764d92c6092",
+                        "access_data": {
+                            "access_token": "ya29.CjAtA-dWSM-80aOnvwa96zvfUBHdHn7p8oJuHCU4-ew6PVPyQrr2zSeMAEv-VKCGT5A",
+                            "token_type": "Bearer",
+                            "expires_in": 3599,
+                            "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUwNzgyYmNmMGE5NzQxZTZiZjkwMjY2ZGMzNTY4YWE5MDc5MWYxNmYifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhdF9oYXNoIjoiVkV4eHVxc0FSbG4zQ3RCNkFaM0NjQSIsImF1ZCI6Ijc5OTYxNzM4MTQxMi1xZzlkYmRzbXRmcjBhaXVpNG8xMWJ0ajBhMzY4bDNnaC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwNDAyNTY0MzY2MzI1MTM3NjQ3NCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhenAiOiI3OTk2MTczODE0MTItcWc5ZGJkc210ZnIwYWl1aTRvMTFidGowYTM2OGwzZ2guYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJoZCI6IjY1YXBwcy5jb20iLCJlbWFpbCI6ImFiYWJraW5ANjVhcHBzLmNvbSIsImlhdCI6MTQ2OTY0ODE2NywiZXhwIjoxNDY5NjUxNzY3fQ.RnvEDNe6k5ttX00I2bbFbT3ZilaPu3ZqqBXIKTLj7WaFx7Alw6W4yZO_FGTYDxCedr0O0nOg6xh5J4buPK26Pbt57XnZqyYMEucHUjuXz3VOFOIRb_lqTAW5YOM7TvylHJF_mMIzH5HjXVgkdj8Jdtl29-J3q-sFhMmHzm45EPKPp9kwnO4eVK1mhLk7YmmQP8dwSFi-a-0Ti8LZNMm7fPEw9AvXujwcrLIPjZVOmC_udrAcUNWaz46QrHtsB3c9dX-kyjkfvS3MZ9xwTlLyglvx6LxI2iBK1etl6Pt5cXxaEM-wAFE4mteDLFtXxaO6yCcHnOKW2nRt7roWZ-Z6PA"
+                        }
+                    }
+                }
             }
-          }
-        }
-      }
+            
