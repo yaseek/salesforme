@@ -35,9 +35,8 @@ HOST: http://185.26.115.63
 
 + Request (x-www-form-urlencoded)
 
-            "username": "testuser",
+            "email": "test@salesfor.me",
             "password": "userpassword",
-            "csrf": "<csrf code>"
 
 + Request (application/json)
 
@@ -45,11 +44,10 @@ HOST: http://185.26.115.63
 
             {
                 "username": "testuser",
-                "password": "userpassword",
-                "csrf": "<csrf code>"
+                "password": "userpassword"
             }
 
-+ Response  200 (application/json)
++ Response 200 (application/json)
 
   + Body
 
@@ -104,6 +102,6 @@ HOST: http://185.26.115.63
 
 Все, перечисленные ниже методы требуют указания заголовка запроса `x-session-id`, полученного в результате авторизации пользователя в системе.
 
-## Пользователи системы /users
+## Пользователи системы [/users]
 
-## Размещение акций /actions
+## Размещение акций [/actions]
