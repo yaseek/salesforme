@@ -3,6 +3,8 @@ const fs = require('fs'),
 
 
 module.exports.config = require('./config');
+module.exports.session = require('./http/session');
+
 module.exports.auth = {
   vk: require('./auth/vk'),
   fb: require('./auth/fb'),

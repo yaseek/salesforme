@@ -9,7 +9,10 @@ module.exports = function (app) {
 
     if (method && req.query.code) {
       method(req.query)
-        .then((out) => res.status(200).send(new res.Response(out)))
+        .then((out) => {
+          var session_data = core.session.getData(out);
+          res.status(200).send(new res.Response(out));
+        })
         .catch((err) => {
           res.status(500).send(err);
         })
@@ -24,9 +27,11 @@ module.exports = function (app) {
     var user = new core.User();
     user.checkAuth(req.body)
       .then((uuid) => {
-        res.status(200).send(new res.Response({uuid:uuid}));  
+        var session_data = core.session.getData({uuid:uuid});
+        res.status(200).send(new res.Response(session_data));  
       })    
       .catch((err) => {
+        console.log('ERR', err);
         res.handleError({code: 401, message: 'AUTH_FAILED'})
       })
   })

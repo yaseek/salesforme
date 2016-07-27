@@ -28,6 +28,9 @@ core.config.loadConfig(__dirname + '/etc/config.yaml')
     return core.db.init(core.config.postgres);
   })
   .then(() => {
+    return core.session.init(core.config.session);
+  })
+  .then(() => {
     core.mailer.init(core.config.mail);
   })
   .then(() => {
