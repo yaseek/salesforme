@@ -11,7 +11,7 @@ module.exports = function (app) {
       method(req.query)
         .then((out) => {
           var session_data = core.session.getData(out);
-          res.status(200).send(new res.Response(out));
+          res.status(200).send(new res.Response(session_data));
         })
         .catch((err) => {
           res.status(500).send(err);
@@ -63,7 +63,8 @@ module.exports = function (app) {
         return out;
       })
       .then((uuid) => {
-        res.status(200).send(new res.Response({uuid:uuid}));
+        var session_data = core.session.getData({uuid:uuid});
+        res.status(200).send(new res.Response(session_data));
       })
       .catch((err) => {
         res.handleError(err);
