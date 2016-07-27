@@ -13,12 +13,17 @@ HOST: http://185.26.115.63
 
 + Response 200 (application/json)
 
-    + Body
+  + Body
     
-            {
-                "csrf": "<csrf code>"
-            }
-
+      {
+        "version": "1.0.0",
+        "description": "API SalesForMe",
+        "vk_app": 5222884,
+        "vk_api_version": "5.52",
+        "fb_app": 152750598427241,
+        "google_app": "799617381412-qg9dbdsmtfr0aiui4o11btj0a368l3gh.apps.googleusercontent.com",
+        "mailru_app": 746248
+      }
 
 ## Прямая авторизация пользователя [/auth]
 
@@ -26,105 +31,67 @@ HOST: http://185.26.115.63
 
 + Request (x-www-form-urlencoded)
 
-            "username": "testuser",
-            "password": "userpassword",
-            "csrf": "<csrf code>"
+      "username": "testuser",
+      "password": "userpassword",
+      "csrf": "<csrf code>"
 
 + Request (application/json)
 
-        {
-            "username": "testuser",
-            "password": "userpassword",
-            "csrf": "<csrf code>"
-        }
+  + Body
 
-+ Response  302 (text/plain)
+      {
+        "username": "testuser",
+        "password": "userpassword",
+        "csrf": "<csrf code>"
+      }
+
++ Response  200 (application/json)
+
+  + Body
+
+      {
+        "meta": { },
+        "result": {
+          "sid": "c354b133-b7cb-4aab-949e-a669e68b9c0d.1469648474933.51a4824a1fdc629a3f30886290d26828b036edb6",
+          "auth": {
+            "uuid": "c354b133-b7cb-4aab-949e-a669e68b9c0d"
+          }
+        }
+      }
 
 
 ## Авторизация через соцсети [/auth/:name?code=:code&redirect_uri=:redirect_uri]
 
 + Parameters
     
-    + name -- string, social network name (fb, vk)
+    + id -- string, social network name (fb, vk)
     + code -- string, authorization code
     + redirect_uri -- тот же URL, который был указан в строке запроса авторизации 
-    соцсети при прохождении процедуры OAuth авторизации
+    соцсети при прохождении процедуры OAuth2 авторизации
 
 ### Запрос авторизации [GET]
 
-В поле `info` ответа содержится нативный ответ соцсети. 
-`uuid` -- пользовательский уникальный номер в системе
-`access_token` -- токен доступа соответствующей соцсети
+`sid` -- идентификатор сессии пользователя, используется в заголовке `x-session-id` 
+`auth`:
+  + `uuid` -- пользовательский уникальный номер в системе
+  + `access_data` -- авторизационные данные соцсети
 
 + Response 200 (application/json)
 
     + Body
 
-            {
-              "access_token": "504d8e578afa1f914110a461cf9a3073fcc1857b94b357889c6b74ac6220ecb6412dfca99faa15e33280d",
-              "uuid": "c354b133-b7cb-4aab-949e-a669e68b9c0d",
-              "info": {
-                "id": 5550055,
-                "first_name": "Иван",
-                "last_name": "Табуреткин",
-                "sex": 2,
-                "nickname": "~=* Ваня *=~",
-                "screen_name": "ivan",
-                "bdate": "23.2.1991",
-                "city": {
-                  "id": 56,
-                  "title": "Ижевск"
-                },
-                "country": {
-                  "id": 1,
-                  "title": "Россия"
-                },
-                "timezone": 4,
-                "photo_50": "http://cs626819.vk.me/v626819050/cb54/Tzd84SRC9ak.jpg",
-                "photo_100": "http://cs626819.vk.me/v626819050/cb53/2C4FwdT0s40.jpg",
-                "photo_200": "http://cs626819.vk.me/v626819050/cb52/1TdyMGseXXg.jpg",
-                "photo_400_orig": "http://cs626819.vk.me/v626819050/cb51/pOwmLtNXdrI.jpg",
-                "photo_id": "7450050_418354035",
-                "has_photo": 1,
-                "online": 0,
-                "home_phone": "",
-                "crop_photo": {
-                  "photo": {
-                    "id": 418354035,
-                    "album_id": -6,
-                    "owner_id": 7450050,
-                    "photo_75": "http://cs626819.vk.me/v626819050/c46a/KOMThfaVITA.jpg",
-                    "photo_130": "http://cs626819.vk.me/v626819050/c46b/mqc0iNQVt6A.jpg",
-                    "photo_604": "http://cs626819.vk.me/v626819050/c46c/iEGXJ1DYlas.jpg",
-                    "photo_807": "http://cs626819.vk.me/v626819050/c46d/ke85EUVY6xk.jpg",
-                    "photo_1280": "http://cs626819.vk.me/v626819050/c46e/9ihZkXSfZB4.jpg",
-                    "width": 1200,
-                    "height": 798,
-                    "text": "",
-                    "date": 1463744339,
-                    "post_id": 3742
-                  },
-                  "crop": {
-                    "x": 19.83,
-                    "y": 11.9,
-                    "x2": 76.83,
-                    "y2": 98.5
-                  },
-                  "rect": {
-                    "x": 25.44,
-                    "y": 24.75,
-                    "x2": 66.52,
-                    "y2": 65.41
-                  }
-                },
-                "verified": 0,
-                "followers_count": 263,
-                "occupation": {
-                  "type": "work",
-                  "id": 95576582,
-                  "name": "65apps"
-                },
-                "home_town": "Ижевск"
-              }
-            }    
-
+      {
+        "meta": {},
+        "result": {
+          "sid": "0ab372c9-2d4b-4c47-8373-b764d92c6092.1469648167592.0e7dbffba0fabce18341e1ce407c452b7d33567d",
+          "auth": {
+            "uuid": "0ab372c9-2d4b-4c47-8373-b764d92c6092",
+            "access_data": {
+              "access_token": "ya29.CjAtA-dWSM-80aOnvwa96zvfUBHdHn7p8oJuHCU4-ew6PVPyQrr2zSeMAEv-VKCGT5A",
+              "token_type": "Bearer",
+              "expires_in": 3599,
+              "id_token": "eyJhbGciOiJSUzI1NiIsImtpZCI6IjUwNzgyYmNmMGE5NzQxZTZiZjkwMjY2ZGMzNTY4YWE5MDc5MWYxNmYifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhdF9oYXNoIjoiVkV4eHVxc0FSbG4zQ3RCNkFaM0NjQSIsImF1ZCI6Ijc5OTYxNzM4MTQxMi1xZzlkYmRzbXRmcjBhaXVpNG8xMWJ0ajBhMzY4bDNnaC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwNDAyNTY0MzY2MzI1MTM3NjQ3NCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhenAiOiI3OTk2MTczODE0MTItcWc5ZGJkc210ZnIwYWl1aTRvMTFidGowYTM2OGwzZ2guYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJoZCI6IjY1YXBwcy5jb20iLCJlbWFpbCI6ImFiYWJraW5ANjVhcHBzLmNvbSIsImlhdCI6MTQ2OTY0ODE2NywiZXhwIjoxNDY5NjUxNzY3fQ.RnvEDNe6k5ttX00I2bbFbT3ZilaPu3ZqqBXIKTLj7WaFx7Alw6W4yZO_FGTYDxCedr0O0nOg6xh5J4buPK26Pbt57XnZqyYMEucHUjuXz3VOFOIRb_lqTAW5YOM7TvylHJF_mMIzH5HjXVgkdj8Jdtl29-J3q-sFhMmHzm45EPKPp9kwnO4eVK1mhLk7YmmQP8dwSFi-a-0Ti8LZNMm7fPEw9AvXujwcrLIPjZVOmC_udrAcUNWaz46QrHtsB3c9dX-kyjkfvS3MZ9xwTlLyglvx6LxI2iBK1etl6Pt5cXxaEM-wAFE4mteDLFtXxaO6yCcHnOKW2nRt7roWZ-Z6PA"
+            }
+          }
+        }
+      }
