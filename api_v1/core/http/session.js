@@ -23,7 +23,7 @@ expected data:
 */
 function getData (data) {
   var timestamp = Date.now(),
-      sid = [
+        sid = [
         data.uuid,
         timestamp,
       ].join('.');
