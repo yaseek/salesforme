@@ -73,7 +73,7 @@ module.exports = function (app) {
       .catch(res.handleError);
   });
 
-  app.post( '/uploads', [ handleUpload ], (req, res) => {
+  app.post( '/uploads', [ /*core.session.authority,*/ handleUpload ], (req, res) => {
     var uploads = new core.Uploads();
 
     uploads.save(req.files, req.user)
@@ -83,4 +83,4 @@ module.exports = function (app) {
       .catch(res.handleError);
   });
 
-};
+};  

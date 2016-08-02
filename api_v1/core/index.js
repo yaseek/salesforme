@@ -13,9 +13,12 @@ module.exports.auth = {
 }
 module.exports.db = require('./db');
 module.exports.User = require('./model/user');
+module.exports.Shop = require('./model/shop');
+module.exports.Action = require('./model/action');
 module.exports.Uploads = require('./model/uploads');
 
 module.exports.response = require('./http/response');
+module.exports.sqlResolve = require('./db/sql-resolve');
 
 var Mailer = require('./model/mailer');
 module.exports.mailer = new Mailer();

@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(core.response.prepare);
 
 app.get('/info', function(req, res){
-  console.log('CONFIG', core.config.info);
+  //console.log('CONFIG', core.config.info);
   res.status(200).send(core.config.info);//.send('It is the API place');
 });
 

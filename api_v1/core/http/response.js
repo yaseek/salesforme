@@ -43,7 +43,7 @@ function handleError(res) {
     var errMessage;
     console.log('ERR', out);
     if (typeof out === 'object') {
-      errMessage = out.message || out.Message || out.toString();
+      errMessage = out.message || out.Message || undefined;
     } else {
       errMessage = out.toString();
     }
