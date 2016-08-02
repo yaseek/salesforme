@@ -116,7 +116,7 @@ HOST: http://185.26.115.63
 
             X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
 
-+ Response (application/json)
++ Response 200 (application/json)
 
     + Body
 
@@ -146,11 +146,35 @@ HOST: http://185.26.115.63
                 }
             }
 
-## Акции [/actions]
+## Магазины [/shops]
 
-## Акции [/actions/{uuid}]
+### Получение списка магазинов [GET]
 
-### Получение данных [GET]
+Получение фильтруемого и сортируемого списка магазинов
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "meta": {
+                    "total": 2
+                },
+                "result": [
+                    {
+                        "uuid": "d321be07-a592-4379-98f7-bf5f6d1fefab",
+                        "title": "ООО \"Бюро вечных услуг\"",
+                        "phone": "89125554433",
+                        "address": "РФ, г.Казань, пр. Амирхана, д. 22",
+                        "href": "http://bes.ru",
+                        "latitude": 512346,
+                        "longitude": 501456,
+                        "accuracy": 10
+                    }
+                ]
+            }
+
+### Публикация данных нового магазина [POST]           
 
 + Request
 
@@ -158,27 +182,117 @@ HOST: http://185.26.115.63
 
             X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
 
-+ Response (application/json)
+    + Body (application/json)
+
+            {
+                "title": "ООО \"Бюро вечных услуг\"",
+                "phone": "89125554433",
+                "address": "РФ, г.Казань, пр. Амирхана, д. 22",
+                "href": "http://bes.ru",
+                "latitude": 512346,
+                "longitude": 501456,
+                "accuracy": 10
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "meta": { },
+                "result": "d321be07-a592-4379-98f7-bf5f6d1fefab"    
+            }
+
+## Акции [/actions]
+
+### Получение списка акций [GET]
+
+Получение фильтруемого и сортируемого списка акций
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+
+                "meta": {
+                    "total": 1
+                },
+                "result": [
+                    {
+                        "uuid": "62750aae-c367-4f35-b9cf-a49aa9bbcb52",
+                        "title": "Первая акция",
+                        "category": "мода",
+                        "cat2gis": null,
+                        "description": "это самая первая акция, добавленная в сисстему для теста",
+                        "discount_value": 20,
+                        "discount_min": 20,
+                        "discount_max": 30,
+                        "expiration_begin": "2016-08-01T00:00:00.000Z",
+                        "expiration_end": "2016-08-07T00:00:00.000Z",
+                        "shop": "d321be07-a592-4379-98f7-bf5f6d1fefab",
+                        "expiration_interval": {
+                            "days": 6
+                        },
+                        "rating": 4
+                    }
+                ]
+            }
+
+### Публикация новой акции [POST]           
+
++ Request
+
+    + Headers
+
+            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
+
+    + Body (application/json)
+
+            {
+                "title": "Первая акция",
+                "category": "мода",
+                "description": "это самая первая акция, добавленная в сисстему для теста",
+                "discount_value": 20,
+                "discount_min": 20,
+                "discount_max": 30,
+                "expiration_begin": "2016-08-01T00:00:00.000Z",
+                "expiration_end": "2016-08-07T00:00:00.000Z",
+                "shop": "d321be07-a592-4379-98f7-bf5f6d1fefab"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "meta": { },
+                "result": "c354b133-b7cb-4aab-949e-a669e68b9c0d"    
+            }
+
+## Конкретная акция [/actions/{uuid}]
+
+### Получение данных акции [GET]
+
++ Response 200 (application/json)
 
     + Body
 
             {
                 "meta": { },
                 "result": {
-                    "uuid": "",
-                    "title": "",
-                    "category": "",
-                    "cat2gis": "",
-                    "description": "",
+                    "uuid": "62750aae-c367-4f35-b9cf-a49aa9bbcb52",
+                    "title": "Первая акция",
+                    "category": "мода",
+                    "cat2gis": null,
+                    "description": "это самая первая акция, добавленная в сисстему для теста",
                     "discount_value": 20,
                     "discount_min": 20,
                     "discount_max": 30,
-                    "expiration_begin": "2016-08-01T23:59:59+4",
-                    "expiration_end": "2016-08-01T23:59:59+4",
+                    "expiration_begin": "2016-08-01T00:00:00.000Z",
+                    "expiration_end": "2016-08-07T00:00:00.000Z",
                     "expiration_interval": {
-                        "days": 6,
-                        "hours": 23,
-                        "minutes": 59
+                        "days": 6
                     },
                     "shop": {
                         "uuid": "d321be07-a592-4379-98f7-bf5f6d1fefab",
@@ -197,23 +311,105 @@ HOST: http://185.26.115.63
                 }   
             }
 
-## Акции [/actions/{uuid}/rating]
+## Список оценок акции [/actions/{uuid}/rating]
 
 ### Получение списка оценок акции [GET]
 
-+ Request
-
-    + Headers
-
-            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
-
-+ Response (application/json)
++ Response 200 (application/json)
 
     + Body
 
             {
-                "meta": { },
+                "meta": { 
+                    "total": 1
+                },
                 "result": [
+                    "timestamp": "2016-08-01T00:00:00.000Z",
+                    "rating": 4,
+                    "comment": "очень понравилось",
+                    "user": "c354b133-b7cb-4aab-949e-a669e68b9c0d"
                 ]
             }
 
+## Список изображений акции [/actions/{uuid}/images]
+
+### Получение списка оценок акции [GET]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "meta": { 
+                    "total": 1
+                },
+                "result": [
+                    "0e4ffced-b242-4eae-bea2-04f10eefd756"
+                ]
+            }
+
+## Загрузки [/api/uploads]
+
+### Загрузка новых файлов [POST]
+
++ Request (multipart/form-data, boundary=AaB03x)
+
+    + Body
+            
+            --AaB03x
+            content-disposition: form-data; name="image"
+            
+            $report
+            --AaB03x
+            content-disposition: form-data; name="userfile"; filename="$filename"
+            Content-Type: $mimetype
+            Content-Transfer-Encoding: binary
+            
+            $binarydata
+            --AaB03x--
+
++ Response 200 (application/json)
+
+        { 
+            "meta": {
+                "total": 1
+            },
+            "result": [
+                "a7fb7421-5bc0-4e3c-b684-e78b6d7f5ebe"
+            ]
+        }
+
+## Загруженный файл [/api/uploads/{uuid}]
+
++ Parameters
+    
+    + uuid (uuid) -- уникальный идентификатор файла
+
+### Получение файла [GET]
+
++ Response 200 ($mimetype)
+
+## Информация о загруженном файле [/api/uploads/{uuid}/info]
+
++ Parameters 
+    
+    + uuid (uuid) -- уникальный идентификатор файла
+
+### Получение информации [GET]
+
++ Response 200 (application/json)
+
+        { 
+            "meta": { },
+            "result": { 
+                "uuid": "a7fb7421-5bc0-4e3c-b684-e78b6d7f5ebe",
+                "subject": "fc75e5b5-6da3-41f8-934f-43a08de2a380",
+                "filename": "b89fe229d25d2edbf9a757d87968f68e",
+                "originalname": "uploads.js",
+                "mimetype": "application/javascript",
+                "destination": "/srv/uploads",
+                "size": 2119,
+                "timestamp": "2016-08-01T09:13:10.795Z",
+                "fieldname": "document" 
+            } 
+        }
