@@ -37,9 +37,9 @@ Action.prototype.create = function (data) {
       cat2gis: null,
       shop: data.shop,
       description: data.description,
-      discount_value: isNaN(data.discount_value) ? null : data.discount_value,
-      discount_min: isNaN(data.discount_min) ? null : data.discount_min,
-      discount_max: isNaN(data.discount_max) ? null : data.discount_max,
+      discount_value: Number(data.discount_value),
+      discount_min: Number(data.discount_min),
+      discount_max: Number(data.discount_max),
       expiration_begin: !data.expiration_begin ? new Date() : new Date(data.expiration_begin),
       expiration_end: !data.expiration_end ? new Date() : new Date(data.expiration_end)
     })
