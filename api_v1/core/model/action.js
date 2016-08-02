@@ -37,11 +37,11 @@ Action.prototype.create = function (data) {
       cat2gis: null,
       shop: data.shop,
       description: data.description,
-      discount_value: data.discount_value,
-      discount_min: data.discount_min,
-      discount_max: data.discount_max,
-      expiration_begin: new Date(data.expiration_begin),
-      expiration_end: new Date(data.expiration_end)
+      discount_value: isNaN(data.discount_value) ? null : data.discount_value,
+      discount_min: isNaN(data.discount_min) ? null : data.discount_min,
+      discount_max: isNaN(data.discount_max) ? null : data.discount_max,
+      expiration_begin: !data.expiration_begin ? new Date() : new Date(data.expiration_begin),
+      expiration_end: !data.expiration_end ? new Date() : new Date(data.expiration_end)
     })
       .toParams()
   ).then(() => action.uuid);
