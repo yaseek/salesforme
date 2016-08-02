@@ -106,4 +106,112 @@ HOST: http://185.26.115.63
 
 ## Пользователи системы [/users]
 
-## Размещение акций [/actions]
+## Текущий пользователь системы [/users/me]
+
+### Получение данных [GET]
+
++ Request
+
+    + Headers
+
+            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
+
++ Response (application/json)
+
+    + Body
+
+            {
+                "meta": { },
+                "result": {
+                    "uuid": "c354b133-b7cb-4aab-949e-a669e68b9c0d",
+                    "created": "2016-07-22T19:03:24.187Z",
+                    "regs": [
+                        {
+                            "user": "c354b133-b7cb-4aab-949e-a669e68b9c0d",
+                            "type": "VK",
+                            "email": "test@test.com",
+                            "user_id": "7450050",
+                            "created": "2016-07-22T19:03:24.281Z",
+                            "authorized": "2016-08-01T14:13:41.885Z"
+                        },
+                        {
+                            "user": "c354b133-b7cb-4aab-949e-a669e68b9c0d",
+                            "type": "native",
+                            "email": "ab@izh.com",
+                            "user_id": "test@test.com",
+                            "created": "2016-07-25T19:02:44.337Z",
+                            "authorized": "2016-07-25T19:41:54.882Z"
+                        }
+                    ]
+                }
+            }
+
+## Акции [/actions]
+
+## Акции [/actions/{uuid}]
+
+### Получение данных [GET]
+
++ Request
+
+    + Headers
+
+            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
+
++ Response (application/json)
+
+    + Body
+
+            {
+                "meta": { },
+                "result": {
+                    "uuid": "",
+                    "title": "",
+                    "category": "",
+                    "cat2gis": "",
+                    "description": "",
+                    "discount": {
+                        "value": "20",
+                        "min": "20",
+                        "max": "30"
+                    },
+                    "expiration": {
+                        "begin": "2016-08-01T23:59:59+4",
+                        "end": "2016-08-01T00:00:00+4",
+                        "interval": {
+                            "days": 6,
+                            "hours": 23,
+                            "minutes": 59
+                        }
+                    },
+                    "shop": {
+                        id: "1234",
+                        title: "Бюро вечных услуг",
+                        phone: "89225554433",
+                        address: "РФ, г.Казань, пр. Амирхана, д. 22",
+                        href: "http://bes.ru"
+                    },
+                    "rating": "4"
+                }   
+            }
+
+## Акции [/actions/{uuid}/rating]
+
+### Получение списка оценок акции [GET]
+
++ Request
+
+    + Headers
+
+            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
+
++ Response (application/json)
+
+    + Body
+
+            {
+                "meta": { },
+                "result": [
+                ]
+            }
+

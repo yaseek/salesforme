@@ -13,6 +13,7 @@ module.exports.auth = {
 }
 module.exports.db = require('./db');
 module.exports.User = require('./model/user');
+module.exports.Uploads = require('./model/uploads');
 
 module.exports.response = require('./http/response');
 

@@ -1,6 +1,8 @@
 
 const crypto = require('crypto');
 
+const core = require('../');
+
 var config;
 
 function init (config_data) {
@@ -42,10 +44,12 @@ function getData (data) {
 module.exports.getData = getData;
 
 function authority (req, res, next) {
-  var sid = req.headers[config.header];
-  if (!checkSessionId(sid)) {
+  var sid = req.headers[config.header],
+      user_id = checkSessionId(sid);
+  if (!user_id) {
     res.status(403).send(new res.Response('Forbidden'))
   } else {
+    res.user = new core.User(user_id);
     next();
   }
 }
@@ -54,7 +58,7 @@ module.exports.authority = authority;
 function checkSessionId (sid) {
   if (!sid) return false;
   var matches = sid.match(/^(.+)\.(\d+)\.(.+)$/);
-  console.log('SESSION ID', matches, sid);
+  //console.log('SESSION ID', matches, sid);
   if (!matches) return false;
 
   var timestamp = Date.now();
@@ -64,5 +68,5 @@ function checkSessionId (sid) {
   return signature([
       matches[1],
       matches[2]
-    ].join('.')) === matches[3];
+    ].join('.')) === matches[3] ? matches[1] : false;
 }

@@ -59,3 +59,7 @@ session:
   secure_phrase: 6842f1a0-5427-11e6-8643-001e68746665
   expires: 86400 #seconds
   header: x-session-id
+
+uploads:
+  destination: /srv/uploads
+  

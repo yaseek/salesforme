@@ -66,6 +66,36 @@ User.prototype.setuuid = function (uuid) {
   return this;
 }
 
+User.prototype.getRegs = function () {
+  var user = this;
+  return db.pool.query(
+    sql.select()
+      .from(VIEW_SOCIAL)
+      .where({ user: user.uuid })
+      .orderBy('authorized desc')
+      .toParams()
+  ).then((out) => {
+    return out.rows;
+  })
+}
+
+User.prototype.get = function () {
+  var user = this;
+  return db.pool.query(
+    sql.select()
+      .from(VIEW_USERS)
+      .where({ uuid: user.uuid })
+      .toParams()
+  )
+  .then((out) => out.rows[0])
+  .then((out) => {
+    return user.getRegs().then((regs) => {
+      out.regs = regs;
+      return out;
+    })
+  });
+}
+
 User.prototype.create = function (data) {
   var user = this;
   user.uuid = uuid.v4();
