@@ -122,6 +122,28 @@ User.prototype.create = function (data) {
   .then(() => user.uuid)
 }
 
+User.prototype.set = function (data) {
+  var user = this;
+  return db.pool.query(
+    sql.update(USERS, {
+      first_name: data.first_name,
+      last_name: data.last_name
+    })
+    .toParams()
+  )
+  .then(() => {
+    if (!!data.password) {
+      return db.pool.query(
+        sql.update(USERS, {
+          password: user.setPassword(data.password)
+        })
+          .where({uuid: user.uuid})
+          .toParams()
+      )
+    }
+  })
+}
+
 User.prototype.update = function (data) {
   var user = this;
   console.log('UPDATE', data, user);

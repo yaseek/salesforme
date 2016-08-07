@@ -5,9 +5,12 @@ const core = require('../'),
       db = core.db;
 
 const uuid = require('node-uuid'),
+      async = require('async'),
       sql = require('sql-bricks-postgres');
 
 const ACTIONS = 'actions',
+      ACTIONS_IMAGES = 'actions_images',
+      ACTIONS_RATING = 'actions_rating',
       VIEW_ACTIONS = 'v_actions',
       VIEW_ACTIONS_IMAGES = 'v_actions_images',
       VIEW_ACTIONS_RATING = 'v_actions_rating';
@@ -96,4 +99,15 @@ Action.prototype.getRating = function () {
       .where({action: action.uuid})
       .toParams()
   ).then((out) => out.rows);
+}
+
+Action.prototype.addImages = function (images, user) {
+  var action = this;
+  async.eachSeries(images || [], (image_id) => {
+    db.pool.query(
+      sql.insert(AC)
+    )
+  }, (err) => {
+
+  });
 }
