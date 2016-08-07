@@ -127,7 +127,7 @@ Action.prototype.addImages = function (images, user) {
       .toParams()
     )
     .then(() => callback())
-    .catch((err) => callback(err);
+    .catch((err) => callback(err));
   }, (err) => {
     if (err) return Promise.reject(err);
     Promise.resolve();
@@ -153,5 +153,6 @@ Action.prototype.addRating = function (data, user) {
       comment: data.comment
     })
     .toParams()
+  )
 }
 
