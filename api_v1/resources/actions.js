@@ -14,11 +14,11 @@ module.exports = function (app) {
       .catch(res.handleError);
   });
 
-  app.post( '/actions', (req, res) => {
+  app.post( '/actions', [ core.session.authority ], (req, res) => {
 
     var action = new core.Action();
 
-    action.create(req.body)
+    action.create(req.body, req.user)
       .then((out) => {
         res.send(new res.Response(out));
       })
