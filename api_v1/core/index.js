@@ -9,7 +9,8 @@ module.exports.auth = {
   vk: require('./auth/vk'),
   fb: require('./auth/fb'),
   google: require('./auth/google'),
-  mailru: require('./auth/mailru')
+  mailru: require('./auth/mailru'),
+  yandex: require('./auth/yandex')
 }
 module.exports.db = require('./db');
 module.exports.User = require('./model/user');
