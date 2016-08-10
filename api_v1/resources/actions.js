@@ -14,11 +14,11 @@ module.exports = function (app) {
       .catch(res.handleError);
   });
 
-  app.post( '/actions', (req, res) => {
+  app.post( '/actions', [ core.session.authority ], (req, res) => {
 
     var action = new core.Action();
 
-    action.create(req.body)
+    action.create(req.body, req.user)
       .then((out) => {
         res.send(new res.Response(out));
       })
@@ -47,11 +47,33 @@ module.exports = function (app) {
       .catch(res.handleError);
   });
 
+  app.post( '/actions/:id/images', [ core.session.authority ], (req, res) => {
+
+    var action = new core.Action(req.params.id);
+
+    action.addImages(req.body, req.user)
+      .then((out) => {
+        res.send(new res.Response(out));
+      })
+      .catch(res.handleError);
+  });
+
   app.get( '/actions/:id/rating', (req, res) => {
 
     var action = new core.Action(req.params.id);
 
     action.getRating()
+      .then((out) => {
+        res.send(new res.Response(out));
+      })
+      .catch(res.handleError);
+  });
+
+  app.post( '/actions/:id/rating', [ core.session.authority ], (req, res) => {
+
+    var action = new core.Action(req.params.id);
+
+    action.addRating(req.body, req.user)
       .then((out) => {
         res.send(new res.Response(out));
       })

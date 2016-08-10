@@ -121,6 +121,8 @@ HOST: http://185.26.115.63
                 "result": {
                     "uuid": "c354b133-b7cb-4aab-949e-a669e68b9c0d",
                     "created": "2016-07-22T19:03:24.187Z",
+                    "first_name": "Иван",
+                    "last_name": "Табуреткин",
                     "regs": [
                         {
                             "user": "c354b133-b7cb-4aab-949e-a669e68b9c0d",
@@ -140,6 +142,30 @@ HOST: http://185.26.115.63
                         }
                     ]
                 }
+            }
+
+### Изменение своих данных [PUT]
+
++ Request
+
+    + Headers
+
+            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
+    + Body
+
+            {
+                "first_name": "Иван",
+                "last_name": "Табуреткин",
+                "password": "12345"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "meta": { },
+                "result": "ok"
             }
 
 ## Магазины [/shops]
@@ -327,6 +353,30 @@ HOST: http://185.26.115.63
                 ]
             }
 
+### Запись значения рейтинга для акции [PUT]
+
++ Request
+
+    + Headers
+
+            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
+
+    + Body (application/json)
+
+            {
+                "rating": 5,
+                "comment": "всё хорошо"
+            }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "meta": {},
+                "result": "ok"
+            }
+
 ## Список изображений акции [/actions/{uuid}/images]
 
 ### Получение списка оценок акции [GET]
@@ -342,6 +392,29 @@ HOST: http://185.26.115.63
                 "result": [
                     "0e4ffced-b242-4eae-bea2-04f10eefd756"
                 ]
+            }
+
+### Добавление изображений к акции [PUT]
+
++ Request
+
+    + Headers
+
+            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
+
+    + Body (application/json)
+
+            [
+                "0e4ffced-b242-4eae-bea2-04f10eefd756"
+            ]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "meta": {},
+                "result": "ok"
             }
 
 ## Загрузки [/api/uploads]

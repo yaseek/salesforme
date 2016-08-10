@@ -5,9 +5,13 @@ const core = require('../'),
       db = core.db;
 
 const uuid = require('node-uuid'),
+      async = require('async'),
       sql = require('sql-bricks-postgres');
 
 const ACTIONS = 'actions',
+      ACTIONS_IMAGES = 'actions_images',
+      ACTIONS_RATING = 'actions_rating',
+      SHOP_ACTIONS = 'shop_actions',
       VIEW_ACTIONS = 'v_actions',
       VIEW_ACTIONS_IMAGES = 'v_actions_images',
       VIEW_ACTIONS_RATING = 'v_actions_rating';
@@ -26,7 +30,7 @@ Action.prototype.getList = function (query) {
     .then((out) => out.rows);
 }
 
-Action.prototype.create = function (data) {
+Action.prototype.create = function (data, user) {
   var action = this;
   action.uuid = uuid.v4();
   return db.pool.query(
@@ -35,16 +39,26 @@ Action.prototype.create = function (data) {
       title: data.title,
       category: data.category,
       cat2gis: null,
-      shop: data.shop,
       description: data.description,
       discount_value: Number(data.discount_value),
       discount_min: Number(data.discount_min),
       discount_max: Number(data.discount_max),
       expiration_begin: !data.expiration_begin ? new Date() : new Date(data.expiration_begin),
-      expiration_end: !data.expiration_end ? new Date() : new Date(data.expiration_end)
+      expiration_end: !data.expiration_end ? new Date() : new Date(data.expiration_end),
+      user: user.uuid
     })
       .toParams()
-  ).then(() => action.uuid);
+  )
+  .then(() => {
+    return db.pool.query(
+      sql.insert(SHOP_ACTIONS, {
+        shop: data.shop,
+        action: action.uuid
+      })
+      .toParams()
+    )
+  })
+  .then(() => action.uuid);
 }
 
 Action.prototype.get = function () {
@@ -97,3 +111,48 @@ Action.prototype.getRating = function () {
       .toParams()
   ).then((out) => out.rows);
 }
+
+/**
+  images -- array of upload ids
+  */
+Action.prototype.addImages = function (images, user) {
+  var action = this;
+  async.eachSeries(images || [], (upload_id, callback) => {
+    db.pool.query(
+      sql.insert(ACTIONS_IMAGES, {
+        action: action.uuid,
+        upload: upload_id,
+        user: user.uuid
+      })
+      .toParams()
+    )
+    .then(() => callback())
+    .catch((err) => callback(err));
+  }, (err) => {
+    if (err) return Promise.reject(err);
+    Promise.resolve();
+  });
+}
+
+/**
+  images -- array of upload ids
+  data
+    comment
+    rating -- numeric value
+  */
+Action.prototype.addRating = function (data, user) {
+  var action = this;
+
+  if ((typeof data.rating === 'undefined') || isNaN(data.rating) ||
+    data.rating < 0) return Promise.reject('BAD_RATING');
+  return db.pool.query(
+    sql.insert(ACTIONS_RATING, {
+      action: action.uuid,
+      user: user.uuid,
+      rating: data.rating,
+      comment: data.comment
+    })
+    .toParams()
+  )
+}
+
