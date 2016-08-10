@@ -26,13 +26,14 @@ function auth (query) {
     return request.get({
       uri: 'https://www.googleapis.com/plus/v1/people/me',
       qs: {
-        access_token: access_data.access_token
+        access_token: access_data.access_token,
+        //fields: 'id,image,name,emails'
       }
     })
   })
   .then((out) => {
     info = JSON.parse(out);
-    //console.log('INFO', info);
+    console.log('INFO', info);
 
     var user = new core.User();
 
@@ -48,11 +49,20 @@ function auth (query) {
     })
   })
   .then((uuid) => {
+
+    var avatar;
+    try {
+      avatar = info.image.url;
+    } catch(e) {}
     return {
       access_token: access_data.access_token,
       uuid: uuid,
       access_data: access_data,
-      info: info
+      info: info,
+
+      avatar: avatar,
+      first_name: (info.name || {}).givenName,
+      last_name: (info.name || {}).familyName
     }
   })
 

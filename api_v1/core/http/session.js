@@ -35,6 +35,11 @@ function getData (data) {
       sid,
       signature(sid)
     ].join('.'),
+
+    avatar: data.avatar,
+    first_name: data.first_name,
+    last_name: data.last_name,
+
     auth: {
       uuid: data.uuid,
       access_data: data.access_data

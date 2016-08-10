@@ -66,7 +66,11 @@ function auth (query) {
       access_token: access_data.access_token,
       uuid: uuid,
       access_data: access_data,
-      info: info
+      info: info,
+
+      avatar: info.pic_50,
+      first_name: info.first_name,
+      last_name: info.last_name
     }
   })
 

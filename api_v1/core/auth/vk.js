@@ -6,13 +6,13 @@ const request = require('request-promise-native');
 const core = require('../');
 
 function auth (query) {
-  //console.log('QUERY', query);
+  console.log('QUERY', query, core.config.auth.vk);
   var access_data;
   return request.get({
     uri: 'https://oauth.vk.com/access_token',
     qs: {
-      client_id: core.config.info.vk_app,
-      client_secret: core.config.secrets.vk,
+      client_id: core.config.auth.vk.client_id,
+      client_secret: core.config.auth.vk.secret,
       code: query.code,
       redirect_uri: query.redirect_uri
     }
@@ -25,7 +25,7 @@ function auth (query) {
       uri: 'https://api.vk.com/method/users.get',
       qs: {
         access_token: access_data.access_token,
-        v: core.config.info.vk_api_version,
+        v: core.config.auth.vk.api_version,
         fields: `photo_id, verified, sex, bdate, city, country, home_town, has_photo, 
           photo_50, photo_100, photo_200, photo_400_orig, 
           online, contacts, 
@@ -37,8 +37,8 @@ function auth (query) {
     })
   })
   .then((out) => {
-    var info = JSON.parse(out);
-    console.log('INFO', info);
+    var info = JSON.parse(out).response[0];
+    //console.log('INFO', info);
 
     var user = new core.User();
 
@@ -51,8 +51,12 @@ function auth (query) {
         return {
           access_token: access_data.access_token,
           uuid: user.uuid,
-          info: info.response[0],
-          access_data: access_data
+          info: info,
+          access_data: access_data,
+          
+          avatar: info.photo_50,
+          first_name: info.first_name,
+          last_name: info.last_name,
         }
       })
   })

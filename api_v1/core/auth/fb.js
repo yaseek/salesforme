@@ -46,11 +46,19 @@ function auth (query) {
       email: info.email,
     })
       .then(() => {
+        var avatar;
+        try {
+          avatar = info.picture.data.url;
+        } catch(e) {}
+
         return {
           access_token: access_data.access_token,
           uuid: user.uuid,
           info: info,
-          access_data: access_data
+          access_data: access_data,
+
+          avatar: avatar,
+          first_name: info.name
         }
       })
   })

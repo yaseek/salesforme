@@ -10,6 +10,7 @@ info:
   fb_app: 152750598427241
   google_app: 799617381412-qg9dbdsmtfr0aiui4o11btj0a368l3gh.apps.googleusercontent.com 
   mailru_app: 746248
+  yandex_app: 04e8d72f9495458c80428a974ba18c3b
 
 secrets:
   vk: 2KPSXWgZABSk4DmIdXkY
@@ -33,6 +34,9 @@ auth:
     client_id: 746248
     private_key: e14a2f71a54881adac117f36786cf29e
     secret: 4edce5668eaea0eacaebe9851040c07d
+  yandex:
+    client_id: 04e8d72f9495458c80428a974ba18c3b
+    secret: b202d3c2f57b4bd0a3c89376b3636a08
 
 mail:
 #  host: smtp.yandex.ru
