@@ -99,6 +99,8 @@ HOST: http://185.26.115.63
                     }
                 }
             }
+            
+# Group Cущности системы            
 
 ## Пользователи системы [/users]
 
@@ -198,13 +200,13 @@ HOST: http://185.26.115.63
 
 ### Публикация данных нового магазина [POST]           
 
-+ Request
++ Request (application/json)
 
     + Headers
 
             X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
 
-    + Body (application/json)
+    + Body 
 
             {
                 "title": "ООО \"Бюро вечных услуг\"",
@@ -263,13 +265,13 @@ HOST: http://185.26.115.63
 
 ### Публикация новой акции [POST]           
 
-+ Request
++ Request (application/json)
 
     + Headers
 
             X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
 
-    + Body (application/json)
+    + Body 
 
             {
                 "title": "Первая акция",
@@ -355,13 +357,13 @@ HOST: http://185.26.115.63
 
 ### Запись значения рейтинга для акции [PUT]
 
-+ Request
++ Request (application/json)
 
     + Headers
 
             X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
 
-    + Body (application/json)
+    + Body 
 
             {
                 "rating": 5,
@@ -396,13 +398,13 @@ HOST: http://185.26.115.63
 
 ### Добавление изображений к акции [PUT]
 
-+ Request
++ Request (application/json)
 
     + Headers
 
             X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
 
-    + Body (application/json)
+    + Body 
 
             [
                 "0e4ffced-b242-4eae-bea2-04f10eefd756"
