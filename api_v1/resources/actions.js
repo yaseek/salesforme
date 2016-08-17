@@ -33,6 +33,7 @@ module.exports = function (app) {
       .then((out) => {
         res.send(new res.Response(out));
       })
+      .then(() => action.incViews())
       .catch(res.handleError);
   });
 

@@ -134,6 +134,18 @@ Action.prototype.addImages = function (images, user) {
   });
 }
 
+Action.prototype.incViews = function () {
+  var action = this;
+
+  return db.pool.query(
+    sql.update(ACTIONS, {
+      views: sql('views + 1')
+    })
+    .where({uuid: this.uuid})
+    .toParams()
+  )
+}
+
 /**
   images -- array of upload ids
   data
