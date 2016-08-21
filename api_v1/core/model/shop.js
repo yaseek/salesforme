@@ -24,12 +24,24 @@ Shop.prototype.getList = function (query) {
     .then((out) => out.rows);
 }
 
+Shop.prototype.getChildren = function (shop_id) {
+  var shop = this;
+
+  return db.pool.query(
+    sql.select('uuid')
+      .from(SHOPS)
+      .where({parent: shop_id})
+      .toParams()
+  ).then((out) => out.rows.map((shop) => shop.uuid));
+}
+
 Shop.prototype.create = function (data) {
   var shop = this;
   shop.uuid = uuid.v4();
   return db.pool.query(
     sql.insert(SHOPS, {
       uuid: shop.uuid,
+      parent: data.parent,
       title: data.title,
       phone: data.phone,
       address: data.address,

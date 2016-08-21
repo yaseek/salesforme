@@ -3,7 +3,10 @@ const core = require('../core')
 
 module.exports = function (app) {
 
-  app.get('/users/me', [ core.session.authority ], (req, res) => {
+  app.get('/users/me', [ 
+    core.session.authority, 
+    core.session.restrictUser
+  ], (req, res) => {
     res.user.get()
       .then((out) => {
         res.send(new res.Response(out))
@@ -11,7 +14,10 @@ module.exports = function (app) {
       .catch(res.handleError)
   })
 
-  app.put('/users/me', [ core.session.authority ], (req, res) => {
+  app.put('/users/me', [ 
+    core.session.authority, 
+    core.session.restrictUser
+  ], (req, res) => {
     res.user.set(req.body)
       .then((out) => {
         res.send(new res.Response('ok'))

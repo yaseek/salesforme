@@ -51,14 +51,21 @@ module.exports.getData = getData;
 function authority (req, res, next) {
   var sid = req.headers[config.header],
       user_id = checkSessionId(sid);
-  if (!user_id) {
+  if (!!user_id) {
+    req.user = new core.User(user_id);
+  }
+  next();
+}
+module.exports.authority = authority;
+
+function restrictUser (req, res, next) {
+  if (!req.user) {
     res.status(403).send(new res.Response('Forbidden'))
   } else {
-    res.user = new core.User(user_id);
     next();
   }
 }
-module.exports.authority = authority;
+module.exports.restrictUser = restrictUser;
 
 function checkSessionId (sid) {
   if (!sid) return false;

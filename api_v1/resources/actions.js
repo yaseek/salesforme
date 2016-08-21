@@ -14,7 +14,10 @@ module.exports = function (app) {
       .catch(res.handleError);
   });
 
-  app.post( '/actions', [ core.session.authority ], (req, res) => {
+  app.post( '/actions', [ 
+    core.session.authority,
+    core.session.restrictUser
+  ], (req, res) => {
 
     var action = new core.Action();
 
@@ -25,15 +28,22 @@ module.exports = function (app) {
       .catch(res.handleError);
   });
 
-  app.get( '/actions/:id', (req, res) => {
+  app.get( '/actions/:id', [
+    core.session.authority
+  ], (req, res) => {
 
     var action = new core.Action(req.params.id);
 
     action.get()
       .then((out) => {
         res.send(new res.Response(out));
+        return out;
       })
-      .then(() => action.incViews())
+      .then((out) => {
+        if (req.user && out.user !== req.user.uuid) {
+          action.incViews()
+        }
+      })
       .catch(res.handleError);
   });
 
@@ -48,7 +58,10 @@ module.exports = function (app) {
       .catch(res.handleError);
   });
 
-  app.post( '/actions/:id/images', [ core.session.authority ], (req, res) => {
+  app.post( '/actions/:id/images', [ 
+    core.session.authority,
+    core.session.restrictUser
+  ], (req, res) => {
 
     var action = new core.Action(req.params.id);
 
@@ -70,7 +83,10 @@ module.exports = function (app) {
       .catch(res.handleError);
   });
 
-  app.post( '/actions/:id/rating', [ core.session.authority ], (req, res) => {
+  app.post( '/actions/:id/rating', [ 
+    core.session.authority, 
+    core.session.restrictUser
+  ], (req, res) => {
 
     var action = new core.Action(req.params.id);
 

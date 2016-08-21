@@ -50,15 +50,40 @@ Action.prototype.create = function (data, user) {
       .toParams()
   )
   .then(() => {
-    return db.pool.query(
-      sql.insert(SHOP_ACTIONS, {
-        shop: data.shop,
-        action: action.uuid
-      })
-      .toParams()
-    )
+    return action.bindToShop(data.shop);
   })
   .then(() => action.uuid);
+}
+
+Action.prototype.bindToShop = function (shop_id) {
+  var shop = new core.Shop(shop_id),
+      action = this;
+
+  return shop.getChildren()
+    .then((children) => {
+      if (!!children) {
+        return new Promise((resolve, reject) => {
+          
+          async.eachSeries(children, (child_id, callback) => {
+            return action.bindToShop(child_id)
+              .then(() => callback())
+              .catch(callback);
+          }, (err) => {
+            if (err) return reject(err);
+            resolve();
+          })
+
+        })
+      } else {
+        return db.pool.query(
+          sql.insert(SHOP_ACTIONS, {
+            shop: data.shop,
+            action: action.uuid
+          })
+          .toParams()
+        )
+      }
+    })
 }
 
 Action.prototype.get = function () {

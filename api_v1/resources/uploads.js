@@ -73,7 +73,10 @@ module.exports = function (app) {
       .catch(res.handleError)
   })
 
-  app.post('/uploads', [ /* core.session.authority,*/ handleUpload ],
+  app.post('/uploads', [ /* core.session.authority,*/ 
+    core.session.restrictUser,
+    handleUpload 
+  ],
     (req, res) => {
       var uploads = new core.Uploads()
 
