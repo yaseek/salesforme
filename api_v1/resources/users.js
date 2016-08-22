@@ -7,7 +7,7 @@ module.exports = function (app) {
     core.session.authority, 
     core.session.restrictUser
   ], (req, res) => {
-    res.user.get()
+    req.user.get()
       .then((out) => {
         res.send(new res.Response(out))
       })
@@ -18,7 +18,7 @@ module.exports = function (app) {
     core.session.authority, 
     core.session.restrictUser
   ], (req, res) => {
-    res.user.set(req.body)
+    req.user.set(req.body)
       .then((out) => {
         res.send(new res.Response('ok'))
       })
