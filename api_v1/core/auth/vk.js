@@ -5,7 +5,7 @@ const request = require('request-promise-native');
 
 const core = require('../');
 
-function auth (query) {
+function auth (query, user) {
   console.log('QUERY', query, core.config.auth.vk);
   var access_data;
   return request.get({
@@ -40,7 +40,9 @@ function auth (query) {
     var info = JSON.parse(out).response[0];
     //console.log('INFO', info);
 
-    var user = new core.User();
+    if (!user) {
+      user = new core.User();
+    }
 
     return user.auth({
       type: 'VK',

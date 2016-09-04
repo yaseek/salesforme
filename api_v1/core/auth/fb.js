@@ -5,7 +5,7 @@ const request = require('request-promise-native');
 
 const core = require('../');
 
-function auth (query) {
+function auth (query, user) {
   //console.log('QUERY', query);
   var access_data;
   return request.get({
@@ -38,7 +38,9 @@ function auth (query) {
     var info = JSON.parse(out);
     console.log('INFO', info);
 
-    var user = new core.User();
+    if (!user) {
+      user = new core.User();
+    }
 
     return user.auth({
       type: 'FB',

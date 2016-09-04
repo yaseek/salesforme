@@ -6,7 +6,7 @@ const request = require('request-promise-native');
 
 const core = require('../');
 
-function auth (query) {
+function auth (query, user) {
   var access_data, info;
 
   //console.log('QUERY', query);
@@ -53,7 +53,9 @@ function auth (query) {
     if (!results.length) return Promise.reject('NO_DATA');
     info = results[0];
 
-    var user = new core.User();
+    if (!user) {
+      user = new core.User();
+    }
 
     return user.auth({
       type: 'MAIL.RU',

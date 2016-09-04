@@ -5,7 +5,7 @@ const request = require('request-promise-native');
 
 const core = require('../');
 
-function auth (query) {
+function auth (query, user) {
   var access_data, info;
 
   //console.log('QUERY', query);
@@ -35,7 +35,9 @@ function auth (query) {
     info = JSON.parse(out);
     console.log('INFO', info);
 
-    var user = new core.User();
+    if (!user) {
+      user = new core.User();
+    }
 
     var account = (info.emails || []).reduce((p, c) => {
       return p || ( c.type === 'account' ? c : null);

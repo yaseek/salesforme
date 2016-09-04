@@ -3,12 +3,13 @@ const core = require('../core');
 
 module.exports = function (app) {
 
-  app.get( '/auth', (req, res) => {
+  /* вход через соцсети с регистрацией */
+  app.get( '/auth', core.session.authority ,(req, res) => {
     
     var method = core.auth[req.query.id];
 
     if (method && req.query.code) {
-      method(req.query)
+      method(req.query, req.user)
         .then((out) => {
           var session_data = core.session.getData(out);
           res.status(200).send(new res.Response(session_data));
@@ -21,6 +22,7 @@ module.exports = function (app) {
     }
   });
 
+  /* проверка входа по email */
   app.post( '/auth', (req, res) => {
     //console.log('BODY', req.body);  
     
@@ -36,6 +38,7 @@ module.exports = function (app) {
       })
   })
 
+  /* прямая регистрация по email */
   app.post( '/auth/native', (req, res) => {
 
     if (!req.body.email || !req.body.password) {

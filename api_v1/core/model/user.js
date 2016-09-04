@@ -22,36 +22,43 @@ module.exports = User;
 User.prototype.auth = function (data) {
   var user = this;
   return new Promise((resolve, reject) => {
-    db.pool.query(
-      sql.select()
-        .from(VIEW_SOCIAL)
-        .where({
-          email: data.email
-        })
-        .toParams()
-    )
-    .then((out) => {
-      var method;
-        if (!out.rowCount) {
-          method = user.create;
-        } else {
-          console.log('METHOD UPDATE', out.rows[0]);
-          user.setuuid(out.rows[0].user);
-          method = user.update;
-        }
-      return method.call(user, { social: data })        
-    })
-    .then(() => {
-      if (!!data.password) {
+
+    (function() {
+      if (!!user.uuid) {
+        return user.update.call(user, { social: data });
+      } else {
         return db.pool.query(
-          sql.update(USERS, {
-            password: user.setPassword(data.password)
-          })
-            .where({uuid: user.uuid})
+          sql.select()
+            .from(VIEW_SOCIAL)
+            .where({
+              email: data.email
+            })
             .toParams()
         )
+        .then((out) => {
+          var method;
+            if (!out.rowCount) {
+              method = user.create;
+            } else {
+              console.log('METHOD UPDATE', out.rows[0]);
+              user.setuuid(out.rows[0].user);
+              method = user.update;
+            }
+          return method.call(user, { social: data })        
+        })
+        .then(() => {
+          if (!!data.password) {
+            return db.pool.query(
+              sql.update(USERS, {
+                password: user.setPassword(data.password)
+              })
+                .where({uuid: user.uuid})
+                .toParams()
+            )
+          }
+        })
       }
-    })
+    }())
     .then(() => resolve(user.uuid))
     //.catch(reject)
     .catch((err) => {
