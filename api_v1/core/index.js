@@ -4,6 +4,7 @@ const fs = require('fs'),
 
 module.exports.config = require('./config');
 module.exports.session = require('./http/session');
+module.exports.csrf = require('./http/csrf');
 
 module.exports.auth = {
   vk: require('./auth/vk'),
