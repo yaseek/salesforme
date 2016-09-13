@@ -35,7 +35,8 @@
     "pg-then": "^1.2.1",
     "request": "^2.73.0",
     "request-promise-native": "^1.0.2",
-    "sql-bricks-postgres": "^0.4.2"
+    "sql-bricks-postgres": "^0.4.2",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "eslint": "^3.2.2",
