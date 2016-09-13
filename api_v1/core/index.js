@@ -1,3 +1,5 @@
+'use strict';
+
 const fs = require('fs'),
       path = require('path');
 
@@ -18,6 +20,8 @@ module.exports.User = require('./model/user');
 module.exports.Shop = require('./model/shop');
 module.exports.Action = require('./model/action');
 module.exports.Uploads = require('./model/uploads');
+module.exports.Banners = require('./model/banners');
+module.exports.Ads = require('./model/ads');
 
 module.exports.response = require('./http/response');
 module.exports.sqlResolve = require('./db/sql-resolve');
