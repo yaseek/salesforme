@@ -74,8 +74,8 @@ module.exports = function (app) {
   })
 
   app.post('/uploads', [ 
-    //core.session.authority,
-    //core.session.restrictUser,
+    core.session.authority,
+    core.session.restrictUser,
     handleUpload 
   ],
     (req, res) => {
