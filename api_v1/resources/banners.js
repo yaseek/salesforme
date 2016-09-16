@@ -4,11 +4,13 @@ const core = require('../core');
 
 module.exports = function (app) {
 
-  app.get('/banners', (req, res) => {
+  app.get('/banners', [
+    core.session.authority
+  ], (req, res) => {
 
     let banners = new core.Banners();
 
-    banners.getList(req.query)
+    banners.getList(req.query, req.user)
       .then((out) => {
         var response = new res.Response(out.items);
         response.setTotal(out.total);
@@ -17,7 +19,10 @@ module.exports = function (app) {
       .catch(res.handleError);
   })
 
-  app.post('/banners', (req, res) => {
+  app.post('/banners', [
+    core.session.authority,
+    core.session.restrictUser
+  ], (req, res) => {
 
     let banners = new core.Banners();
 
@@ -35,6 +40,34 @@ module.exports = function (app) {
     banners.get()
       .then((out) => {
         res.status(200).send(new res.Response(out));
+      })
+      .catch(res.handleError);
+  })
+
+  app.put('/banners/:id', [
+    core.session.authority,
+    core.session.restrictUser
+  ], (req, res) => {
+
+    let banners = new core.Banners(req.params.id);
+
+    banners.update(req.body)
+      .then((out) => {
+        res.status(200).send(new res.Response('ok'));
+      })
+      .catch(res.handleError);
+  })
+
+  app.delete('/banners/:id', [
+    core.session.authority,
+    core.session.restrictUser
+  ], (req, res) => {
+
+    let banners = new core.Banners(req.params.id);
+
+    banners.delete()
+      .then((out) => {
+        res.status(200).send(new res.Response('ok'));
       })
       .catch(res.handleError);
   })

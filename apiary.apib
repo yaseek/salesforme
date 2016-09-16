@@ -484,3 +484,162 @@ HOST: http://185.26.115.63
                 "fieldname": "document" 
             } 
         }
+
+# Group Банерная система
+
+## Зарегистрированные в системе банеры [/banners]
+
+В случае, если запрос на получения списка банеров выполняется с указанием 
+заголовка авторизованного пользователя, то будет показан список всех банеров,
+а не только активных в текущий промежуток времени.
+Это же касается получения информации по конкретному банеру.
+
+"type" банера указывается произвольно для условного определения его назначения и 
+указания типа размещения на сайте.
+
+### Получение списка банеров [GET]
+
++ Response 200 (application/json)
+
+        {
+            "meta": {
+                "total": 2
+            },
+            "result": [
+                {
+                    "uuid": "6d9a662c-0eb6-4c9c-b19f-41f00ef2ddff",
+                    "image": "a1b1ed23-5474-4924-854b-232e24bf8ba2",
+                    "type": "topBanner",
+                    "start_time": "2016-09-13T00:00:00.000Z",
+                    "end_time": "2016-09-16T23:59:59.999Z",
+                    "description": "",
+                    "link": "https://twitter.com/",
+                    "views": "0",
+                    "transitions": "0",
+                    "code": "970a1034570100006d9a662c0eb64c9cb19f41f00ef2ddff35030bf8b1543e95b84d40e24e5c56c4c34546f7"
+                },
+                {
+                    "uuid": "752d44b5-3615-4dd3-85a6-737c312c8fae",
+                    "image": "a1b1ed23-5474-4924-854b-232e24bf8ba2",
+                    "type": "topBanner",
+                    "start_time": "2016-09-13T00:00:00.000Z",
+                    "end_time": "2016-09-16T23:59:59.999Z",
+                    "description": "",
+                    "link": "https://twitter.com/",
+                    "views": "1",
+                    "transitions": "1",
+                    "code": "980a103457010000752d44b536154dd385a6737c312c8fae520d35d9f8d4932caa64aa640d301bcf3b921d6a"
+                }
+            ]
+        }
+
+### Размещение банера [POST]
+
++ Request (application/json)
+
+    + Headers
+
+            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
+
+    + Body
+
+            {
+                "image": "a1b1ed23-5474-4924-854b-232e24bf8ba2",
+                "type": "topBanner",
+                "start_time": "2016-09-13T00:00:00.000Z",
+                "end_time": "2016-09-16T23:59:59.999Z",
+                "description": "",
+                "link": "https://twitter.com/"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {},
+            "result": "6d9a662c-0eb6-4c9c-b19f-41f00ef2ddff"
+        }
+
+
+## Данные указанного банера [/banners/:id]
+
+### Получение информации банера [GET]
+
++ Response 200 (application/json)
+
+        {
+            "meta": {},
+            "result": {
+                "uuid": "6d9a662c-0eb6-4c9c-b19f-41f00ef2ddff",
+                "image": "a1b1ed23-5474-4924-854b-232e24bf8ba2",
+                "type": "topBanner",
+                "start_time": "2016-09-13T00:00:00.000Z",
+                "end_time": "2016-09-16T23:59:59.999Z",
+                "description": "",
+                "link": "https://twitter.com/",
+                "views": "0",
+                "transitions": "0",
+                "code": "970a1034570100006d9a662c0eb64c9cb19f41f00ef2ddff35030bf8b1543e95b84d40e24e5c56c4c34546f7"
+            }
+        }
+
+### Изменение информации банера [PUT]
+
++ Request (application/json)
+
+    + Headers
+
+            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
+
+    + Body
+
+            {
+                "image": "a1b1ed23-5474-4924-854b-232e24bf8ba2",
+                "type": "topBanner",
+                "start_time": "2016-09-13T00:00:00.000Z",
+                "end_time": "2016-09-16T23:59:59.999Z",
+                "description": "",
+                "link": "https://twitter.com/"
+            }
+
++ Response 200 (application/json)
+
+        {
+            "meta": {},
+            "result": "ok"
+        }
+
+### Получение информации банера [DELETE]
+
++ Request
+
+    + Headers
+
+            X-Session-Id: c354b133-b7cb-4aab-949e-a669e68b9c0d.1470060821891.e92ea61b90ba93533a49f0a30f7ea18ffabd9532
+
++ Response 200 (application/json)
+
+        {
+            "meta": {},
+            "result": "ok"
+        }
+
+## Отображение рекламного банера [/ads/:code/view]
+
+Данные о просмотрах (views) и переходах по ссылкам банера (transitions)
+фиксируются только для одного действия по уникальной ссылке для исключения накрутки.
+
+code -- подставляется из информации о банере
+
+### Получение изображения [GET]
+
++ Response 200 ($mimetype)
+
+## Ссылка для перехода по рекламе [/ads/:code]
+
+### Переход по рекламе [GET]
+
++ Response 200 (plain/text)
+
+    + Headers
+
+        Location: $transition_link

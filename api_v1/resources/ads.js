@@ -32,7 +32,10 @@ module.exports = function (app) {
         banners = new core.Banners(csrf_data.uuid);
 
     banners.get()
-      .then((out) => res.redirect(302, out.link))
+      .then((out) => {
+        res.set('content-type', 'plain/text')
+        res.redirect(302, out.link);
+      })
       .then(() => ads.tryCount(csrf_data, 1, req.ip))
       .catch(res.handleError)    
   })

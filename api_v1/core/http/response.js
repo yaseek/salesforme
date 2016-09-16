@@ -47,7 +47,7 @@ function handleError(res) {
     } else {
       errMessage = out.toString();
     }
-    var code = (out.code && out.code < 1000) ? out.code : 500;
+    var code = (out.code && out.code >= 100 && out.code < 1000) ? out.code : 500;
     var data = new Response(out, errMessage || 'internal server error');
     //console.log('ERRDATA', out.code, data);
     res.status(code).send(data);

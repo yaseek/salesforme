@@ -17,12 +17,14 @@ function Banners (uuid) {
 }
 module.exports = Banners;
 
-function makeListQuery (query, isCount) {
-  let q = isCount ? sql.select('count(*) cnt') : 
-      (query.fields ? sql.select(query.fields) : sql.select());
+function makeListQuery (tbl) {
+  return function (query, isCount) {
+    let q = isCount ? sql.select('count(*) cnt') : 
+        (query.fields ? sql.select(query.fields) : sql.select());
 
-  q.from(VIEW_BANNERS_active);
-  return q;
+    q.from(tbl);
+    return q;
+  }
 }
 
 function getList (fn, query) {
@@ -50,9 +52,9 @@ function addCSRF (banner) {
   return banner;
 }
 
-Banners.prototype.getList = function (query) {
+Banners.prototype.getList = function (query, user) {
   //return Promise.resolve({total:0, items:[]});
-  let fn = makeListQuery;
+  let fn = !!user ? makeListQuery(VIEW_BANNERS) : makeListQuery(VIEW_BANNERS_active);
   return getList(fn, query)
     .then((list) => {
       return getListCount(fn, query)
@@ -64,13 +66,17 @@ Banners.prototype.getList = function (query) {
 
 Banners.prototype.get = function () {
   let banners = this;
-
+  
   return db.pool.query(
     sql.select()
       .from(VIEW_BANNERS)
       .where({uuid: banners.uuid})
       .toParams()
-  ).then((out) => addCSRF(out.rows[0]))
+  ).then((out) => {
+    if (!out.rowCount) return Promise.reject({code: 404})
+    addCSRF(out.rows[0]);
+    return out.rows[0];
+  })
 }
 
 Banners.prototype.create = function (data) {
@@ -89,3 +95,33 @@ Banners.prototype.create = function (data) {
     .toParams()
   ).then(() => model.uuid);
 }
+
+Banners.prototype.update = function (data) {
+  let banners = this;
+  let model = _.pick(data, 
+      'image',
+      'type',
+      'start_time',
+      'end_time',
+      'description',
+      'link'
+    )
+
+  return db.pool.query(
+    sql.update(BANNERS, model)
+      .where({uuid: banners.uuid})
+    .toParams()
+  );
+}
+
+Banners.prototype.delete = function (data) {
+  let banners = this;
+
+  return db.pool.query(
+    sql.delete()
+      .from(BANNERS)
+      .where({uuid: banners.uuid})
+    .toParams()
+  );
+}
+
